@@ -4,13 +4,28 @@
 #include <iostream>
 #include <memory>
 
+#include "God.hpp" 
+
+#define SDL_RED 255, 0, 0, 255
+#define SDL_GREEN 0, 255, 0, 255
+#define SDL_BLUE 0, 0, 255, 255
+#define SDL_BLACK 0, 0, 0, 255
+#define SDL_WHITE 255, 255, 255, 255
+#define SDL_PURPLE 255, 0, 255, 255
+#define SDL_YELLOW 255, 255, 0, 255
+#define SDL_CYAN 0, 255, 255, 255
+#define SDL_ORANGE 255, 165, 0, 255
+
+
 class RenderHandler {
 public:
     RenderHandler(char const *title, int const width, int const height);
     ~RenderHandler();
 
+    void renderUniverse(God god);
+    void renderGrid(God god);
+
     inline std::pair<int, int> getSize() const { return m_size; }
-    SDL_Texture* loadTexture(char const *path, bool const transparancy = false);
 
 
 private:

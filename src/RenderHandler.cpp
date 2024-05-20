@@ -1,8 +1,7 @@
 #include "../include/RenderHandler.hpp"
 
 RenderHandler::RenderHandler(char const *title, int const width, int const height)
-    : m_window(nullptr, SDL_DestroyWindow), m_renderer(nullptr, SDL_DestroyRenderer), m_size(std::pair<int, int>(width, height)), 
-    m_brickTexture(nullptr), m_sliderTexture(nullptr), m_ballTexture(nullptr)
+    : m_window(nullptr, SDL_DestroyWindow), m_renderer(nullptr, SDL_DestroyRenderer), m_size(std::pair<int, int>(width, height))
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -46,3 +45,46 @@ RenderHandler::~RenderHandler()
     SDL_Quit();
 }
 
+
+void RenderHandler::renderUniverse(God god)
+{
+    SDL_SetRenderDrawColor(m_renderer.get(), 0, 0, 0, 255);
+    SDL_RenderClear(m_renderer.get());
+
+    for (auto &cellularUnit : god.getCellularUnits())
+    {
+        SDL_Rect rect = {cellularUnit.getCoords().first * 10, cellularUnit.getCoords().second * 10, 10, 10};
+        
+        
+        if (cellularUnit.isAlive())
+        {
+            SDL_SetRenderDrawColor(m_renderer.get(), SDL_GREEN);
+        }
+        else
+        {
+            SDL_SetRenderDrawColor(m_renderer.get(), SDL_RED);
+        }
+        SDL_RenderFillRect(m_renderer.get(), &rect);
+    }
+
+    SDL_RenderPresent(m_renderer.get());
+    return;
+}
+
+void RenderHandler::renderGrid(God god)
+{
+    SDL_SetRenderDrawColor(m_renderer.get(), SDL_CYAN - 200);
+
+    for (int i = 0; i < god.getUniverseLength(); i++)
+    {
+        SDL_RenderDrawLine(m_renderer.get(), 0, i * 10, god.getUniverseLength() * 10, i * 10);
+    }
+
+    for (int i = 0; i < god.getUniverseWidth(); i++)
+    {
+        SDL_RenderDrawLine(m_renderer.get(), i * 10, 0, i * 10, god.getUniverseWidth() * 10);
+    }
+
+    SDL_RenderPresent(m_renderer.get());
+    return;
+}

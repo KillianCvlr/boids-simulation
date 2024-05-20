@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderHandler.hpp"
+#include "God.hpp"
 
 #include <SDL.h>
 #include <iostream>
@@ -7,11 +8,16 @@
 
 #define SCREEN_WIDTH 1200
 #define SCREEN_HEIGHT 900
-#define FPS 60
+
+#define LINE_NUMBER 120
+#define COLUMN_NUMBER 90
+
+#define FPS 6
 
 enum class WindowState {
     RUNNING,
-    PAUSE
+    PAUSE,
+    EXIT
 };
 
 
@@ -23,8 +29,10 @@ public:
 
     void mainLoop();
 
+    WindowState handleEvents(SDL_Event event, WindowState const& windowState);
+
 private:
 
-    RenderHandler m_renderHandler;
-    WindowState m_WindowState;
+    RenderHandler renderHandler_;
+    WindowState windowState_;
 };
