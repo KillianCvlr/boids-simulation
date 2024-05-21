@@ -53,7 +53,7 @@ void RenderHandler::renderUniverse(God god)
 
     for (auto &cellularUnit : god.getCellularUnits())
     {
-        SDL_Rect rect = {cellularUnit.getCoords().first * 10, cellularUnit.getCoords().second * 10, 10, 10};
+        SDL_Rect rect = {cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE, CELL_SIZE};
         
         
         if (cellularUnit.isAlive())
@@ -75,14 +75,14 @@ void RenderHandler::renderGrid(God god)
 {
     SDL_SetRenderDrawColor(m_renderer.get(), SDL_CYAN - 200);
 
-    for (int i = 0; i < god.getUniverseLength(); i++)
+    for (int i = 0; i < god.getNbColumns(); i++)
     {
-        SDL_RenderDrawLine(m_renderer.get(), 0, i * 10, god.getUniverseLength() * 10, i * 10);
+        SDL_RenderDrawLine(m_renderer.get(), i * CELL_SIZE, 0, i * CELL_SIZE, god.getNbLines() * CELL_SIZE);
     }
 
-    for (int i = 0; i < god.getUniverseWidth(); i++)
+    for (int i = 0; i < god.getNbLines(); i++)
     {
-        SDL_RenderDrawLine(m_renderer.get(), i * 10, 0, i * 10, god.getUniverseWidth() * 10);
+        SDL_RenderDrawLine(m_renderer.get(), 0, i * CELL_SIZE, god.getNbColumns() * CELL_SIZE, i * CELL_SIZE);
     }
 
     SDL_RenderPresent(m_renderer.get());

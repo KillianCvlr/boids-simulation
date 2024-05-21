@@ -3,11 +3,11 @@
 
 
 
-God::God(int length, int width, int nbCellularUnits) : UniverseLength_(length), UniverseWidth_(width), universeState_(UniverseState::PAUSED)
+God::God(int nbColumns, int nbLines, int nbCellularUnits) : nbColumns_(nbColumns), nbLines_(nbLines), universeState_(UniverseState::PAUSED)
 {
     for (int i = 0; i < nbCellularUnits; i++)
     {
-        cellularUnits_.push_back(CellularUnit(rand() % length, rand() % width));
+        cellularUnits_.push_back(CellularUnit(rand() % nbColumns_, rand() % nbLines_));
     }
 }
 
@@ -41,9 +41,22 @@ UniverseState God::handleMe(SDL_Event e)
         {
             universeState_ = UniverseState::DEAD;
         }
+        else if (e.key.keysym.sym == SDLK_r)
+        {
+            newUniverse(100);
+        }
     }
     
     }
     return universeState_;
 
 }   
+
+void God::newUniverse(int nbCellularUnits)
+{
+    cellularUnits_.clear();
+    for (int i = 0; i < nbCellularUnits; i++)
+    {
+        cellularUnits_.push_back(CellularUnit(rand() % nbColumns_, rand() % nbLines_));
+    }
+}

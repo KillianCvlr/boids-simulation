@@ -16,6 +16,8 @@
 #define SDL_CYAN 0, 255, 255, 255
 #define SDL_ORANGE 255, 165, 0, 255
 
+#define CELL_SIZE 5
+
 
 class RenderHandler {
 public:

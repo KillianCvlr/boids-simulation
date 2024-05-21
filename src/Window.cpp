@@ -2,7 +2,7 @@
 
 
 Window::Window()
-    : renderHandler_("breakout",SCREEN_WIDTH, SCREEN_HEIGHT ), windowState_(WindowState::PAUSE)
+    : renderHandler_("breakout",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSE)
 {
 }
 
@@ -14,7 +14,7 @@ void Window::mainLoop()
 {   
 
     std::cout << "Creating God" << std::endl;
-    God god(LINE_NUMBER, COLUMN_NUMBER, 10);
+    God god(COLUMN_NUMBER, LINE_NUMBER, 10);
     std::cout << "God created" << std::endl;
     
 
