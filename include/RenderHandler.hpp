@@ -24,8 +24,9 @@ public:
     RenderHandler(char const *title, int const width, int const height);
     ~RenderHandler();
 
-    void renderUniverse(God god);
-    void renderGrid(God god);
+    void renderUniverse(God const& god);
+    void renderGrid(God const& god);
+    void renderCells(God const& god);
 
     inline std::pair<int, int> getSize() const { return m_size; }
 

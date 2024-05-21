@@ -46,11 +46,36 @@ RenderHandler::~RenderHandler()
 }
 
 
-void RenderHandler::renderUniverse(God god)
+void RenderHandler::renderUniverse(God const& god)
 {
     SDL_SetRenderDrawColor(m_renderer.get(), 0, 0, 0, 255);
     SDL_RenderClear(m_renderer.get());
+    renderGrid(god);
+    renderCells(god);   
 
+    SDL_RenderPresent(m_renderer.get());
+    return;
+}
+
+void RenderHandler::renderGrid(God const& god)
+{
+    SDL_SetRenderDrawColor(m_renderer.get(), SDL_CYAN - 200);
+
+    for (int i = 0; i < god.getNbColumns(); i++)
+    {
+        SDL_RenderDrawLine(m_renderer.get(), i * CELL_SIZE, 0, i * CELL_SIZE, god.getNbLines() * CELL_SIZE);
+    }
+
+    for (int i = 0; i < god.getNbLines(); i++)
+    {
+        SDL_RenderDrawLine(m_renderer.get(), 0, i * CELL_SIZE, god.getNbColumns() * CELL_SIZE, i * CELL_SIZE);
+    }
+
+    return;
+}
+
+void RenderHandler::renderCells(God const& god)
+{
     for (auto &cellularUnit : god.getCellularUnits())
     {
         SDL_Rect rect = {cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE, CELL_SIZE};
@@ -66,25 +91,5 @@ void RenderHandler::renderUniverse(God god)
         }
         SDL_RenderFillRect(m_renderer.get(), &rect);
     }
-
-    SDL_RenderPresent(m_renderer.get());
-    return;
-}
-
-void RenderHandler::renderGrid(God god)
-{
-    SDL_SetRenderDrawColor(m_renderer.get(), SDL_CYAN - 200);
-
-    for (int i = 0; i < god.getNbColumns(); i++)
-    {
-        SDL_RenderDrawLine(m_renderer.get(), i * CELL_SIZE, 0, i * CELL_SIZE, god.getNbLines() * CELL_SIZE);
-    }
-
-    for (int i = 0; i < god.getNbLines(); i++)
-    {
-        SDL_RenderDrawLine(m_renderer.get(), 0, i * CELL_SIZE, god.getNbColumns() * CELL_SIZE, i * CELL_SIZE);
-    }
-
-    SDL_RenderPresent(m_renderer.get());
     return;
 }

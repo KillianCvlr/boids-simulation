@@ -25,7 +25,6 @@ void Window::mainLoop()
     {   
         mainLoopRunning :
         renderHandler_.renderUniverse(god);
-        renderHandler_.renderGrid(god);
         SDL_Delay(1000 / FPS);
     }
 

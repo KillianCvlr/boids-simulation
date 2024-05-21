@@ -10,10 +10,10 @@
 #define SCREEN_Y 1000
 
 
-#define COLUMN_NUMBER 120
-#define LINE_NUMBER 90
+#define COLUMN_NUMBER 300
+#define LINE_NUMBER 300
 
-#define FPS 20
+#define FPS 40
 
 enum class WindowState {
     RUNNING,
