@@ -6,7 +6,7 @@ CFLAGS ?= -Wall -Wextra -g -std=c++20 $(SDL_CFLAGS)
 SDL_LDLIBS := $(shell sdl2-config --libs)
 LDLIBS ?= -lm $(SDL_LDLIBS)
 
-EXEC = breakout-game
+EXEC = cellular-automata
 
 INCLUDE_PATH ?= ./include
 SRC_PATH = ./src
@@ -45,3 +45,6 @@ $(OBJ_PATH)/main.o: $(SRC_PATH)/main.cpp
 clean:
 	rm -fr $(OBJ_PATH)
 	rm -fr $(BIN_PATH)
+
+cleanrun: clean all
+	$(BIN_PATH)/$(EXEC)

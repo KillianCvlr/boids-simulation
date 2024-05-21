@@ -16,7 +16,7 @@
 #define SDL_CYAN 0, 255, 255, 255
 #define SDL_ORANGE 255, 165, 0, 255
 
-#define CELL_SIZE 5
+#define CELL_SIZE 2
 
 
 class RenderHandler {
@@ -28,6 +28,7 @@ public:
     void renderGrid(God const& god);
     void renderCells(God const& god);
 
+    inline void switchGrid() { showGrid_ = !showGrid_; }
     inline std::pair<int, int> getSize() const { return m_size; }
 
 
@@ -35,4 +36,6 @@ private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
     std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> m_renderer;
     std::pair<int, int> m_size;
+
+    bool showGrid_;
 };

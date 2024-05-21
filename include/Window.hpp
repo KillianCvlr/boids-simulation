@@ -6,18 +6,20 @@
 #include <iostream>
 #include <memory>
 
-#define SCREEN_X 1300
+#define SCREEN_X 2000
 #define SCREEN_Y 1000
 
 
-#define COLUMN_NUMBER 300
-#define LINE_NUMBER 300
+#define COLUMN_NUMBER (SCREEN_X / CELL_SIZE)
+#define LINE_NUMBER (SCREEN_Y / CELL_SIZE)
 
-#define FPS 40
+#define FPS 80
+
+#define NB_CELLULAR_UNITS ((COLUMN_NUMBER * LINE_NUMBER) / 10)
 
 enum class WindowState {
     RUNNING,
-    PAUSE,
+    PAUSED,
     EXIT
 };
 
@@ -30,7 +32,7 @@ public:
 
     void mainLoop();
 
-    WindowState handleEvents(SDL_Event event, WindowState const& windowState);
+    WindowState handleEvents(SDL_Event event, God &god);
 
 private:
 

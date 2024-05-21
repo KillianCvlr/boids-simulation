@@ -1,7 +1,7 @@
 #include "../include/RenderHandler.hpp"
 
 RenderHandler::RenderHandler(char const *title, int const width, int const height)
-    : m_window(nullptr, SDL_DestroyWindow), m_renderer(nullptr, SDL_DestroyRenderer), m_size(std::pair<int, int>(width, height))
+    : m_window(nullptr, SDL_DestroyWindow), m_renderer(nullptr, SDL_DestroyRenderer), m_size(std::pair<int, int>(width, height)), showGrid_(true)
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -50,7 +50,7 @@ void RenderHandler::renderUniverse(God const& god)
 {
     SDL_SetRenderDrawColor(m_renderer.get(), 0, 0, 0, 255);
     SDL_RenderClear(m_renderer.get());
-    renderGrid(god);
+    if (showGrid_) renderGrid(god);
     renderCells(god);   
 
     SDL_RenderPresent(m_renderer.get());

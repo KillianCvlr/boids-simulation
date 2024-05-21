@@ -2,7 +2,7 @@
 
 
 Window::Window()
-    : renderHandler_("breakout",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSE)
+    : renderHandler_("breakout",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSED)
 {
 }
 
@@ -14,42 +14,36 @@ void Window::mainLoop()
 {   
 
     std::cout << "Creating God" << std::endl;
-    God god(COLUMN_NUMBER, LINE_NUMBER, 10);
+    God god(COLUMN_NUMBER, LINE_NUMBER, NB_CELLULAR_UNITS);
     std::cout << "God created" << std::endl;
     
 
     // Gestion des inputs
     SDL_Event e;
     windowState_ = WindowState::RUNNING;
-    while ( god.updateUniverse(e) == UniverseState::ALIVE )
+    while ( windowState_ == WindowState::RUNNING )
     {   
         mainLoopRunning :
+        windowState_ = handleEvents(e, god);
+        god.updateUniverse(e);
         renderHandler_.renderUniverse(god);
         SDL_Delay(1000 / FPS);
     }
 
-    switch (god.getUniverseState())
+    switch (windowState_)
     {
-    case UniverseState::DEAD:
+    case WindowState::EXIT:
         break;
     
-    case UniverseState::PAUSED:
+    case WindowState::PAUSED:
         std::cout << "Universe paused" << std::endl;
-        windowState_ = WindowState::PAUSE;
-        UniverseState universeState;
-        while (windowState_ == WindowState::PAUSE)
+        while (windowState_ == WindowState::PAUSED)
         {
-            universeState = god.handleMe(e);
-            if(universeState == UniverseState::ALIVE)
-            {
-                windowState_ = WindowState::RUNNING;
-                goto mainLoopRunning;
-            }
-            else if (universeState == UniverseState::DEAD)
-            {
-                windowState_ = WindowState::EXIT;
-                break;
-            }
+            windowState_ = handleEvents(e, god);
+        }
+        if (windowState_ == WindowState::RUNNING)
+        {
+            goto mainLoopRunning;
         }
         break;
         
@@ -58,4 +52,41 @@ void Window::mainLoop()
     }
     std::cout << "Main loop finished" << std::endl;
     return;
+}
+
+WindowState Window::handleEvents(SDL_Event e, God &god)
+{
+    while (SDL_PollEvent(&e))
+    {
+        if (e.type == SDL_QUIT)
+        {
+            return WindowState::EXIT;
+        }
+        else if (e.type == SDL_KEYDOWN)
+        {
+            switch (e.key.keysym.sym)
+            {
+            case SDLK_SPACE:
+                return (windowState_ == WindowState::PAUSED ? WindowState::RUNNING : WindowState::PAUSED);
+                break;
+
+            case SDLK_ESCAPE:
+                return WindowState::EXIT;
+                break;
+            
+            case SDLK_n:
+                god.newUniverse(NB_CELLULAR_UNITS);
+                break;
+
+            case SDLK_g:
+                renderHandler_.switchGrid();
+                renderHandler_.renderUniverse(god);
+                break;
+            
+            default:
+                break;
+            }
+        }
+    }
+    return windowState_;
 }
