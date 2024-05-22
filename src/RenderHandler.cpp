@@ -80,15 +80,8 @@ void RenderHandler::renderCells(God const& god)
     {
         SDL_Rect rect = {cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE, CELL_SIZE};
         
-        
-        if (cellularUnit.isAlive())
-        {
-            SDL_SetRenderDrawColor(m_renderer.get(), SDL_GREEN);
-        }
-        else
-        {
-            SDL_SetRenderDrawColor(m_renderer.get(), SDL_RED);
-        }
+        SDL_SetRenderDrawColor(m_renderer.get(), SDL_AQUA);
+
         SDL_RenderFillRect(m_renderer.get(), &rect);
     }
     return;

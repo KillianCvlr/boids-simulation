@@ -13,9 +13,9 @@
 #define COLUMN_NUMBER (SCREEN_X / CELL_SIZE)
 #define LINE_NUMBER (SCREEN_Y / CELL_SIZE)
 
-#define FPS 80
+#define FPS 900
 
-#define NB_CELLULAR_UNITS ((COLUMN_NUMBER * LINE_NUMBER) / 10)
+#define NB_CELLULAR_UNITS ((COLUMN_NUMBER * LINE_NUMBER) / 90)
 
 enum class WindowState {
     RUNNING,

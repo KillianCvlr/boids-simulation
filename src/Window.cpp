@@ -2,7 +2,7 @@
 
 
 Window::Window()
-    : renderHandler_("breakout",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSED)
+    : renderHandler_("cellular-automata",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSED)
 {
 }
 

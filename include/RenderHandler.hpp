@@ -6,15 +6,8 @@
 
 #include "God.hpp" 
 
-#define SDL_RED 255, 0, 0, 255
-#define SDL_GREEN 0, 255, 0, 255
-#define SDL_BLUE 0, 0, 255, 255
-#define SDL_BLACK 0, 0, 0, 255
-#define SDL_WHITE 255, 255, 255, 255
-#define SDL_PURPLE 255, 0, 255, 255
-#define SDL_YELLOW 255, 255, 0, 255
-#define SDL_CYAN 0, 255, 255, 255
-#define SDL_ORANGE 255, 165, 0, 255
+#include "SDLColors.hpp"
+
 
 #define CELL_SIZE 2
 

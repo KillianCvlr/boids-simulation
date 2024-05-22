@@ -1,6 +1,19 @@
 #include <iostream>
 #include <memory>
 
+enum class Direction
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    UP_LEFT,
+    UP_RIGHT,
+    DOWN_LEFT,
+    DOWN_RIGHT
+
+};
+
 class CellularUnit
 {
 
@@ -12,13 +25,9 @@ public:
     inline int getX() const { return coords_.first; }
     inline int getY() const { return coords_.second; }
     inline void setCoords(int x, int y) { coords_ = std::pair<int, int>(x, y); }
-    inline bool isAlive() const { return isAlive_; }
-    inline void setAlive(bool isAlive) { isAlive_ = isAlive; }
-
 
 private:
     std::pair<int, int> coords_;
-    bool isAlive_;
 };
 
 

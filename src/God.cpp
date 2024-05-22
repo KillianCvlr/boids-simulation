@@ -21,7 +21,6 @@ void God::updateUniverse(SDL_Event e)
 {
     int nbCellularUnits = cellularUnits_.size();
     int randomCellularUnitIndex = rand() % nbCellularUnits;
-    cellularUnits_[randomCellularUnitIndex].setAlive(!cellularUnits_[randomCellularUnitIndex].isAlive());
     //std::cout << "CellularUnit " << randomCellularUnitIndex << " is now " << (cellularUnits_[randomCellularUnitIndex].isAlive() ? "alive" : "dead") << std::endl;
     return;
 }
