@@ -16,8 +16,10 @@ public:
     God(int nbColulmns, int nbLines, int nbCellularUnits);
     ~God();
 
-    void updateUniverse(SDL_Event e);
+    void updateUniverse();
     void newUniverse(int nbCellularUnits);
+
+    void moveCellularUnits();
 
     inline std::vector<CellularUnit> getCellularUnits() const { return cellularUnits_; }
     inline int getNbColumns() const { return nbColumns_; }

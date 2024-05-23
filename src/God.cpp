@@ -17,10 +17,10 @@ God::~God()
     cellularUnits_.clear();
 }
 
-void God::updateUniverse(SDL_Event e)
+void God::updateUniverse()
 {
-    int nbCellularUnits = cellularUnits_.size();
-    int randomCellularUnitIndex = rand() % nbCellularUnits;
+    
+
     //std::cout << "CellularUnit " << randomCellularUnitIndex << " is now " << (cellularUnits_[randomCellularUnitIndex].isAlive() ? "alive" : "dead") << std::endl;
     return;
 }
@@ -32,4 +32,13 @@ void God::newUniverse(int nbCellularUnits)
     {
         cellularUnits_.push_back(CellularUnit(rand() % nbColumns_, rand() % nbLines_));
     }
+}
+
+void God::moveCellularUnits()
+{
+    for (auto cellularUnit : cellularUnits_)
+    {
+        cellularUnit.move();
+    }
+    return;
 }

@@ -2,7 +2,7 @@
 
 
 Window::Window()
-    : renderHandler_("cellular-automata",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSED)
+    : renderHandler_("crowd-simulation",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSED)
 {
 }
 
@@ -25,7 +25,7 @@ void Window::mainLoop()
     {   
         mainLoopRunning :
         windowState_ = handleEvents(e, god);
-        god.updateUniverse(e);
+        god.updateUniverse();
         renderHandler_.renderUniverse(god);
         SDL_Delay(1000 / FPS);
     }

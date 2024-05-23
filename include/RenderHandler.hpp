@@ -9,9 +9,6 @@
 #include "SDLColors.hpp"
 
 
-#define CELL_SIZE 2
-
-
 class RenderHandler {
 public:
     RenderHandler(char const *title, int const width, int const height);
