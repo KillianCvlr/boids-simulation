@@ -78,7 +78,7 @@ void RenderHandler::renderCells(God const& god)
 {
     for (auto &cellularUnit : god.getCellularUnits())
     {
-        SDL_Rect rect = {cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE, CELL_SIZE};
+        SDL_Rect rect = {int(cellularUnit.getCoords().first) * CELL_SIZE, int(cellularUnit.getCoords().second) * CELL_SIZE, CELL_SIZE, CELL_SIZE};
         
         SDL_SetRenderDrawColor(m_renderer.get(), SDL_AQUA);
 

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "God.hpp" 
+#include <cmath>
 
 #include "SDLColors.hpp"
 

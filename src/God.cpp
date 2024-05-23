@@ -19,9 +19,7 @@ God::~God()
 
 void God::updateUniverse()
 {
-    
-
-    //std::cout << "CellularUnit " << randomCellularUnitIndex << " is now " << (cellularUnits_[randomCellularUnitIndex].isAlive() ? "alive" : "dead") << std::endl;
+    moveCellularUnits();
     return;
 }
 
@@ -36,9 +34,9 @@ void God::newUniverse(int nbCellularUnits)
 
 void God::moveCellularUnits()
 {
-    for (auto cellularUnit : cellularUnits_)
+    for (int i = 0; i < cellularUnits_.size(); i++)
     {
-        cellularUnit.move();
+        cellularUnits_[i].move();
     }
     return;
 }
