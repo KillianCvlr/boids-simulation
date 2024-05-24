@@ -17,6 +17,8 @@ public:
 
     void renderUniverse(God const& god);
     void renderCells(God const& god);
+    void renderFieldViews(God const& god);
+    void renderFieldView(int x, int y, float angle);
 
     void drawCircle(int x, int y, int radius);
     void drawDisk(int x, int y, int radius);

@@ -4,7 +4,7 @@ CellularUnit::CellularUnit(float x, float y)
     : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0))
 {
     std::cout << " CellularUnit created : " << coords_.first << " " << coords_.second << std::endl;
-    // bitesexqueue!!!! velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
+    // velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
     velocity_.first = 1.0;
 
     // Angle between 0 and 2*PI
@@ -37,5 +37,25 @@ void CellularUnit::move()
     else if (coords_.second > (SCREEN_Y / CELL_SIZE))
     {
         coords_.second = coords_.second - (SCREEN_Y / CELL_SIZE);
+    }
+}
+
+void CellularUnit::updateVelocity()
+{
+    switch(behavior_)
+    {
+        case CellBehavior::NONE:
+            break;
+        case CellBehavior::ACCELERATE:
+            velocity_.first += 0.1;
+            break;
+        case CellBehavior::DECELERATE:
+            velocity_.first -= 0.1;
+            break;
+        case CellBehavior::TURN:
+            velocity_.second += 0.1;
+            break;
+        default:
+            break;
     }
 }

@@ -51,6 +51,7 @@ void RenderHandler::renderUniverse(God const& god)
     SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
     SDL_RenderClear(renderer_.get());
     renderCells(god);   
+    renderFieldViews(god);
 
     SDL_RenderPresent(renderer_.get());
     return;
@@ -59,12 +60,13 @@ void RenderHandler::renderUniverse(God const& god)
 
 void RenderHandler::renderCells(God const& god)
 {
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_AQUA);
+
     for (auto &cellularUnit : god.getCellularUnits())
     {
         
-        SDL_SetRenderDrawColor(renderer_.get(), SDL_AQUA);
 
-        drawDisk(cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE / 2);
+        drawDisk(cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE);
     }
     return;
 }
@@ -109,9 +111,26 @@ void RenderHandler::drawCircle(int centreX, int centreY, int radius)
 
 void RenderHandler::drawDisk(int x1, int y1, int radius)
 {
-    for (int i = 0; i < radius; i++)
+    for (int i = 1; i <= radius; i++)
     {
         drawCircle(x1, y1, i);
     }
+    return;
+}
+
+void RenderHandler::renderFieldViews(God const& god)
+{
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_WHITE);
+    for (auto &cellularUnit : god.getCellularUnits())
+    {
+        renderFieldView(cellularUnit.getX() * CELL_SIZE, cellularUnit.getY() * CELL_SIZE, cellularUnit.getVelocity().second);
+    }
+    return;
+}
+
+void RenderHandler::renderFieldView(int x, int y, float angle)
+{
+    SDL_RenderDrawLine(renderer_.get(), x, y, x + DISTANCE_VIEW * cos(angle + ANGLE_VIEW/2), y + DISTANCE_VIEW * sin(angle + ANGLE_VIEW/2));
+    SDL_RenderDrawLine(renderer_.get(), x, y, x + DISTANCE_VIEW * cos(angle - ANGLE_VIEW/2), y + DISTANCE_VIEW * sin(angle - ANGLE_VIEW/2));
     return;
 }
