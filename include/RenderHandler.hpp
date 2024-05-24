@@ -16,17 +16,17 @@ public:
     ~RenderHandler();
 
     void renderUniverse(God const& god);
-    void renderGrid(God const& god);
     void renderCells(God const& god);
 
-    inline void switchGrid() { showGrid_ = !showGrid_; }
-    inline std::pair<int, int> getSize() const { return m_size; }
+    void drawCircle(int x, int y, int radius);
+    void drawDisk(int x, int y, int radius);
+
+    inline std::pair<int, int> getSize() const { return size_; }
 
 
 private:
-    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
-    std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> m_renderer;
-    std::pair<int, int> m_size;
+    std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
+    std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer_;
+    std::pair<int, int> size_;
 
-    bool showGrid_;
 };

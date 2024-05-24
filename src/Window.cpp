@@ -77,11 +77,6 @@ WindowState Window::handleEvents(SDL_Event e, God &god)
             case SDLK_n:
                 god.newUniverse(NB_CELLULAR_UNITS);
                 break;
-
-            case SDLK_g:
-                renderHandler_.switchGrid();
-                renderHandler_.renderUniverse(god);
-                break;
             
             default:
                 break;

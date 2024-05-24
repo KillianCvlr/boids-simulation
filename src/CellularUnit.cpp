@@ -5,7 +5,7 @@ CellularUnit::CellularUnit(float x, float y)
 {
     std::cout << " CellularUnit created : " << coords_.first << " " << coords_.second << std::endl;
     // bitesexqueue!!!! velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
-    velocity_.first = 3.0;
+    velocity_.first = 1.0;
 
     // Angle between 0 and 2*PI
     velocity_.second  = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(2*M_PI)));
