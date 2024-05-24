@@ -23,19 +23,19 @@ void CellularUnit::move()
 
     if (coords_.first < 0)
     {
-        coords_.first = SCREEN_X - coords_.first;
+        coords_.first = (SCREEN_X / CELL_SIZE) - coords_.first;
     }
-    else if (coords_.first > SCREEN_X)
+    else if (coords_.first > (SCREEN_X / CELL_SIZE))
     {
-        coords_.first = coords_.first - SCREEN_X;
+        coords_.first = coords_.first - (SCREEN_X / CELL_SIZE);
     }
 
     if (coords_.second < 0)
     {
-        coords_.second = SCREEN_Y - coords_.second;
+        coords_.second = (SCREEN_Y / CELL_SIZE) - coords_.second;
     }
-    else if (coords_.second > SCREEN_Y)
+    else if (coords_.second > (SCREEN_Y / CELL_SIZE))
     {
-        coords_.second = coords_.second - SCREEN_Y;
+        coords_.second = coords_.second - (SCREEN_Y / CELL_SIZE);
     }
 }
