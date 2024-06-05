@@ -20,6 +20,7 @@ public:
     void renderFieldViews(God const& god);
     void renderFieldView(int x, int y, float angle);
 
+    void drawrect(int x, int y, int x2, int y2);
     void drawCircle(int x, int y, int radius);
     void drawDisk(int x, int y, int radius);
 

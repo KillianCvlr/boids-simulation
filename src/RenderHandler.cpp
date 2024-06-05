@@ -134,3 +134,12 @@ void RenderHandler::renderFieldView(int x, int y, float angle)
     SDL_RenderDrawLine(renderer_.get(), x, y, x + DISTANCE_VIEW * cos(angle - ANGLE_VIEW/2), y + DISTANCE_VIEW * sin(angle - ANGLE_VIEW/2));
     return;
 }
+
+void RenderHandler::drawrect(int x, int y, int x2, int y2)
+{
+    SDL_RenderDrawLine(renderer_.get(), x, y, x2, y);
+    SDL_RenderDrawLine(renderer_.get(), x2, y, x2, y2);
+    SDL_RenderDrawLine(renderer_.get(), x2, y2, x, y2);
+    SDL_RenderDrawLine(renderer_.get(), x, y2, x, y);
+    return;
+}

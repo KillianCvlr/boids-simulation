@@ -14,7 +14,7 @@ void Window::mainLoop()
 {   
 
     std::cout << "Creating God" << std::endl;
-    God god(COLUMN_NUMBER, LINE_NUMBER, NB_CELLULAR_UNITS);
+    God god(SCREEN_X, SCREEN_Y, NB_CELLULAR_UNITS);
     std::cout << "God created" << std::endl;
     
 
