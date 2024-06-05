@@ -20,6 +20,7 @@ public:
     void subdivide();
     void insertRecursive(CellularUnit const& unit);
     void renderRecursive(RenderHandler& renderHandler);
+    void clear();
 
     inline std::list<CellularUnit> getPoints() const { return points_; }
 

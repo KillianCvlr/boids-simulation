@@ -9,11 +9,7 @@ QuadTree::QuadTree(float x1, float y1, float x2, float y2, int level, int sizeMa
 
 QuadTree::~QuadTree()
 {
-    northWest_.reset();
-    northEast_.reset();
-    southWest_.reset();
-    southEast_.reset();
-    points_.clear();
+    clear();
 }
 
 void QuadTree::subdivide()
@@ -86,6 +82,16 @@ void QuadTree::renderRecursive(RenderHandler & renderer)
         southWest_->renderRecursive(renderer);
         southEast_->renderRecursive(renderer);
     }
+    return;
+}
+
+void QuadTree::clear()
+{
+    northWest_.reset();
+    northEast_.reset();
+    southWest_.reset();
+    southEast_.reset();
+    points_.clear();
     return;
 }
 

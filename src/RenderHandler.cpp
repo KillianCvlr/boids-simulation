@@ -52,6 +52,7 @@ void RenderHandler::renderUniverse(God const& god)
     SDL_RenderClear(renderer_.get());
     renderCells(god);   
     renderFieldViews(god);
+    renderQuadTree(god);
 
     SDL_RenderPresent(renderer_.get());
     return;
@@ -135,8 +136,15 @@ void RenderHandler::renderFieldView(int x, int y, float angle)
     return;
 }
 
-void RenderHandler::drawrect(int x, int y, int x2, int y2)
+void RenderHandler::renderQuadTree(God const& god)
 {
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_BRONZE);
+    god.getQuadTree()->renderRecursive(*this);
+    return;
+}
+
+void RenderHandler::drawrect(int x, int y, int x2, int y2)
+{   
     SDL_RenderDrawLine(renderer_.get(), x, y, x2, y);
     SDL_RenderDrawLine(renderer_.get(), x2, y, x2, y2);
     SDL_RenderDrawLine(renderer_.get(), x2, y2, x, y2);
