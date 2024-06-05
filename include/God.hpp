@@ -19,9 +19,11 @@ public:
 
     void updateUniverse();
     void newUniverse(int nbCellularUnits);
+    void destroyUniverse();
 
     void createQuadTree();
     void moveCellularUnits();
+    void addCell(int x, int y);
 
     inline std::vector<CellularUnit> getCellularUnits() const { return cellularUnits_; }
     inline float getNbColumns() const { return screenX_;; }

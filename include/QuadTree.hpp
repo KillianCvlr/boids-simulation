@@ -14,7 +14,7 @@ class RenderHandler;
 class QuadTree
 {
 public:
-    QuadTree(float x1, float y1, float x2, float y2, int level, int sizeMax = 4);
+    QuadTree(float x1, float y1, float x2, float y2, int level, int sizeMax = SIZE_MAX_QTREE);
     ~QuadTree();
 
     void subdivide();

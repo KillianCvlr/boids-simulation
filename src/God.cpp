@@ -16,7 +16,7 @@ God::~God()
 
 void God::updateUniverse()
 {
-    quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0, 4));
+    quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0));
     createQuadTree();
     moveCellularUnits();
     return;
@@ -29,6 +29,13 @@ void God::newUniverse(int nbCellularUnits)
     {
         cellularUnits_.push_back(CellularUnit(rand() % (int)screenX_, rand() %  (int)screenY_));
     }
+    quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0));
+    createQuadTree();
+}
+
+void God::destroyUniverse()
+{
+    cellularUnits_.clear();
 }
 
 void God::createQuadTree()
@@ -46,5 +53,11 @@ void God::moveCellularUnits()
     {
         cellularUnits_[i].move();
     }
+    return;
+}
+
+void God::addCell(int x, int y)
+{
+    cellularUnits_.push_back(CellularUnit(x, y));
     return;
 }

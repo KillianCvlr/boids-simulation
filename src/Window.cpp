@@ -83,9 +83,21 @@ WindowState Window::handleEvents(SDL_Event e, God &god)
                 god.newUniverse(NB_CELLULAR_UNITS);
                 break;
             
+            case SDLK_r:
+                god.destroyUniverse();
+                std::cout << "THANOS ALL" << std::endl;
+
+                break;
             default:
                 break;
             }
+        }
+        else if (e.type == SDL_MOUSEBUTTONDOWN)
+        {
+            int x, y;
+            SDL_GetMouseState(&x, &y);
+            god.addCell(x, y);
+            renderHandler_.renderUniverse(god);
         }
     }
     return windowState_;

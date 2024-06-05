@@ -34,7 +34,7 @@ void QuadTree::subdivide()
 
 void QuadTree::insertRecursive(CellularUnit const& unit)
 {
-    if (points_.size() < sizeMax_ && northWest_ == nullptr)
+    if (points_.size() < sizeMax_ && northWest_ == nullptr || level_ == MAX_LEVEL_QTREE)
     {
         points_.push_back(unit);
     }
