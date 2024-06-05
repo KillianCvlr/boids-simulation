@@ -3,12 +3,8 @@
 #include "RenderHandler.hpp"
 #include "God.hpp"
 
-
-#include <SDL.h>
 #include <iostream>
 #include <memory>
-
-
 
 enum class WindowState {
     RUNNING,

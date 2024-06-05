@@ -1,4 +1,5 @@
-#include "QuadTree.hpp"
+#include "../include/QuadTree.hpp"
+#include "../include/RenderHandler.hpp"
 
 QuadTree::QuadTree(float x1, float y1, float x2, float y2, int level, int sizeMax)
     : x1_(x1), y1_(y1), x2_(x2), y2_(y2), level_(level), sizeMax_(sizeMax), northWest_(nullptr), northEast_(nullptr), southWest_(nullptr), southEast_(nullptr), points_()
@@ -74,16 +75,16 @@ void QuadTree::insertRecursive(CellularUnit const& unit)
     return;
 }
 
-void QuadTree::renderRecursive(RendererHandler const& renderer)
+void QuadTree::renderRecursive(RenderHandler & renderer)
 {
     renderer.drawrect(x1_, y1_, x2_, y2_);
 
     if (northWest_ != nullptr)
     {
-        northWest_->renderRecursive(renderer, color, coef);
-        northEast_->renderRecursive(renderer, color, coef);
-        southWest_->renderRecursive(renderer, color, coef);
-        southEast_->renderRecursive(renderer, color, coef);
+        northWest_->renderRecursive(renderer);
+        northEast_->renderRecursive(renderer);
+        southWest_->renderRecursive(renderer);
+        southEast_->renderRecursive(renderer);
     }
     return;
 }

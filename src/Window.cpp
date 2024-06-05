@@ -1,5 +1,10 @@
 #include "../include/Window.hpp"
 
+#include "RenderHandler.hpp"
+#include "God.hpp"
+
+#include <iostream>
+#include <memory>
 
 Window::Window()
     : renderHandler_("crowd-simulation",SCREEN_X, SCREEN_Y ), windowState_(WindowState::PAUSED)

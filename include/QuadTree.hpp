@@ -8,7 +8,8 @@
 
 #include "DefaultValues.hpp"
 #include "CellularUnit.hpp"
-#include "RenderHandler.hpp"
+
+class RenderHandler;
 
 class QuadTree
 {
@@ -18,7 +19,7 @@ public:
 
     void subdivide();
     void insertRecursive(CellularUnit const& unit);
-    void renderRecursive(RendererHandler const& renderer);
+    void renderRecursive(RenderHandler& renderHandler);
 
     inline std::list<CellularUnit> getPoints() const { return points_; }
 

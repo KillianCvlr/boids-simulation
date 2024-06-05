@@ -3,11 +3,11 @@
 #include <SDL.h>
 #include <iostream>
 #include <memory>
-
-#include "God.hpp" 
 #include <cmath>
 
 #include "SDLColors.hpp"
+
+class God;
 
 
 class RenderHandler {

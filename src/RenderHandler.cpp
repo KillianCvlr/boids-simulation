@@ -1,5 +1,5 @@
 #include "../include/RenderHandler.hpp"
-
+#include "../include/God.hpp" 
 RenderHandler::RenderHandler(char const *title, int const width, int const height)
     : window_(nullptr, SDL_DestroyWindow), renderer_(nullptr, SDL_DestroyRenderer), size_(std::pair<int, int>(width, height))
 {

@@ -1,5 +1,5 @@
-#include "RenderHandler.hpp"
 #include "Window.hpp"  
+#include <iostream>
 
 int main(int argc, char const *argv[])
 {
