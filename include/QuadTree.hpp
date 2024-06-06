@@ -18,11 +18,9 @@ public:
     ~QuadTree();
 
     void subdivide();
-    void insertRecursive(CellularUnit const& unit);
+    void insertRecursive(CellularUnit* unit);
     void renderRecursive(RenderHandler& renderHandler);
     void clear();
-
-    inline std::list<CellularUnit> getPoints() const { return points_; }
 
 private:
 
@@ -38,10 +36,7 @@ private:
     std::unique_ptr<QuadTree> southWest_;
     std::unique_ptr<QuadTree> southEast_;
 
-    std::list<CellularUnit> points_;
+    std::list<CellularUnit *> points_;
 
 };
-
-
-
 
