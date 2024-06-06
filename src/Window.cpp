@@ -86,8 +86,22 @@ WindowState Window::handleEvents(SDL_Event e, God &god)
             case SDLK_r:
                 god.destroyUniverse();
                 std::cout << "THANOS ALL" << std::endl;
-
                 break;
+
+            case SDLK_q:
+                renderHandler_.switchRenderQuadTree();
+                renderHandler_.renderUniverse(god);
+                break;
+            
+            case SDLK_f:
+                renderHandler_.switchRenderFieldViews();
+                renderHandler_.renderUniverse(god);
+                break;
+            case SDLK_c:
+                renderHandler_.switchRenderCells();
+                renderHandler_.renderUniverse(god);
+                break;
+                
             default:
                 break;
             }

@@ -50,9 +50,9 @@ void RenderHandler::renderUniverse(God const& god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
     SDL_RenderClear(renderer_.get());
-    renderCells(god);   
-    renderFieldViews(god);
-    renderQuadTree(god);
+    if (renderCells_) renderCells(god);   
+    if (renderFieldViews_) renderFieldViews(god);
+    if (renderQuadTree_) renderQuadTree(god);
 
     SDL_RenderPresent(renderer_.get());
     return;

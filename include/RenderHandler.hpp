@@ -27,10 +27,18 @@ public:
 
     inline std::pair<int, int> getSize() const { return size_; }
 
+    inline void switchRenderQuadTree() { renderQuadTree_ = !renderQuadTree_; }
+    inline void switchRenderFieldViews() { renderFieldViews_ = !renderFieldViews_; }
+    inline void switchRenderCells() { renderCells_ = !renderCells_; }
+
 
 private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
     std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer_;
     std::pair<int, int> size_;
+
+    bool renderQuadTree_ = true;
+    bool renderFieldViews_ = true;
+    bool renderCells_ = true;
 
 };
