@@ -18,25 +18,25 @@ CellularUnit::~CellularUnit()
 
 void CellularUnit::move()
 {
-    coords_.first += velocity_.first * cos(velocity_.second);
-    coords_.second += velocity_.first * sin(velocity_.second);
+    coords_.first += velocity_.first * cos(velocity_.second) * CELL_SIZE;
+    coords_.second += velocity_.first * sin(velocity_.second) * CELL_SIZE;
 
     if (coords_.first < 0)
     {
-        coords_.first = (SCREEN_X / CELL_SIZE) - coords_.first;
+        coords_.first = (SCREEN_X) - coords_.first;
     }
-    else if (coords_.first > (SCREEN_X / CELL_SIZE))
+    else if (coords_.first > (SCREEN_X))
     {
-        coords_.first = coords_.first - (SCREEN_X / CELL_SIZE);
+        coords_.first = coords_.first - (SCREEN_X);
     }
 
     if (coords_.second < 0)
     {
-        coords_.second = (SCREEN_Y / CELL_SIZE) - coords_.second;
+        coords_.second = (SCREEN_Y) - coords_.second;
     }
-    else if (coords_.second > (SCREEN_Y / CELL_SIZE))
+    else if (coords_.second > (SCREEN_Y))
     {
-        coords_.second = coords_.second - (SCREEN_Y / CELL_SIZE);
+        coords_.second = coords_.second - (SCREEN_Y);
     }
 }
 

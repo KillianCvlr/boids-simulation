@@ -65,9 +65,7 @@ void RenderHandler::renderCells(God const& god)
 
     for (auto &cellularUnit : god.getCellularUnits())
     {
-        
-
-        drawDisk(cellularUnit.getCoords().first * CELL_SIZE, cellularUnit.getCoords().second * CELL_SIZE, CELL_SIZE);
+        drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
     }
     return;
 }
@@ -124,7 +122,7 @@ void RenderHandler::renderFieldViews(God const& god)
     SDL_SetRenderDrawColor(renderer_.get(), SDL_WHITE);
     for (auto &cellularUnit : god.getCellularUnits())
     {
-        renderFieldView(cellularUnit.getX() * CELL_SIZE, cellularUnit.getY() * CELL_SIZE, cellularUnit.getVelocity().second);
+        renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getVelocity().second);
     }
     return;
 }
