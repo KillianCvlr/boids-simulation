@@ -107,6 +107,11 @@ WindowState Window::handleEvents(SDL_Event e, God *god)
                 renderHandler_.switchRenderProximity();
                 renderHandler_.renderUniverse(god);
                 break;
+
+            case SDLK_l:
+                renderHandler_.switchRenderNeighboringLinks();
+                renderHandler_.renderUniverse(god);
+                break;
                 
             default:
                 break;
