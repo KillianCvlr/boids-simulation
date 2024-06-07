@@ -25,6 +25,7 @@ public:
     void moveCellularUnits();
     void addCell(int x, int y);
     void updateNeighbours();
+    void detectCollisions();
 
     inline const std::vector<CellularUnit>* getCellularUnits() const { return &cellularUnits_; }
     inline float getNbColumns() const { return screenX_;; }
@@ -37,6 +38,7 @@ private:
     float screenY_;
 
     std::unique_ptr<QuadTree> quadTree_;
+    long int idCounter_ = 0;
 };
 
 

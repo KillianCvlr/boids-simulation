@@ -65,7 +65,7 @@ void RenderHandler::renderCells(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_AQUA);
 
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
@@ -123,7 +123,7 @@ void RenderHandler::drawDisk(int x1, int y1, int radius)
 void RenderHandler::renderFieldViews(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_WHITE);
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getVelocity().second);
@@ -147,10 +147,10 @@ void RenderHandler::renderQuadTree(const God *god)
 
 void RenderHandler::renderProximity(const God *god)
 {
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
-        cellularUnit.getNeighbors().size() == 1 ? SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN) : SDL_SetRenderDrawColor(renderer_.get(), SDL_RED);
+        cellularUnit.getNeighbors().size() == 0 ? SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN) : SDL_SetRenderDrawColor(renderer_.get(), SDL_RED);
         drawCircle(cellularUnit.getX(), cellularUnit.getY(), CELL_SIZE + DISTANCE_VIEW);
     }
     return;
@@ -159,7 +159,7 @@ void RenderHandler::renderProximity(const God *god)
 void RenderHandler::renderNeighboringLinks(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_CINNAMON);
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         for (auto neighbor : cellularUnit.getNeighbors())

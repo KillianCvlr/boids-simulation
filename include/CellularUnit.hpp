@@ -21,11 +21,15 @@ class CellularUnit
 {
 
 public:
-    CellularUnit(float x, float y);
+    CellularUnit(float x, float y, long int id);
     ~CellularUnit();
 
     void move();
     void updateVelocity();
+    float distanceTo(const CellularUnit *unit) const;
+    float angleTo(const CellularUnit *unit) const;
+    bool hasCollided(const CellularUnit *unit) const;
+    bool hasCollidedNeighbor() const;
 
     inline std::pair<float, float> getCoords() const { return coords_; }
     inline float getX() const { return coords_.first; }
@@ -36,6 +40,9 @@ public:
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }
+    inline void setDead() { isAlive_ = false; }
+    inline bool isAlive() const { return isAlive_; }
+    inline long int getId() const { return id_; }
 
 private:
     std::pair<float, float> coords_;
@@ -44,6 +51,8 @@ private:
     std::list<const CellularUnit *> neighbors_ = {};
 
     CellBehavior behavior_;
+    long int id_;
+    bool isAlive_ = true;
 
 };
 

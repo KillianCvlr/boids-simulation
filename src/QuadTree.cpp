@@ -34,7 +34,8 @@ void QuadTree::subdivide()
 
 void QuadTree::insertRecursive(CellularUnit *unit)
 {
-    if (points_.size() < sizeMax_ && northWest_ == nullptr || level_ == MAX_LEVEL_QTREE)
+    if ((points_.size() < sizeMax_ && northWest_ == nullptr )
+        || (level_ == MAX_LEVEL_QTREE))
     {
         points_.push_back(unit);
     }
@@ -87,7 +88,10 @@ void QuadTree::renderRecursive(RenderHandler & renderer)
 
 void QuadTree::circleQuerryRecursive(CellularUnit *unit)
 {
-    if (unit->getX() - DISTANCE_VIEW > x2_ || unit->getX() + DISTANCE_VIEW < x1_ || unit->getY() - DISTANCE_VIEW > y2_ || unit->getY() + DISTANCE_VIEW < y1_)
+    if ((unit->getX() - DISTANCE_VIEW > x2_) 
+        || (unit->getX() + DISTANCE_VIEW < x1_) 
+        || (unit->getY() - DISTANCE_VIEW > y2_) 
+        || (unit->getY() + DISTANCE_VIEW < y1_))
     {
         return;
     }
@@ -97,7 +101,8 @@ void QuadTree::circleQuerryRecursive(CellularUnit *unit)
         {
             for (auto cellPoint : points_)
             {
-                if (sqrt(pow(cellPoint->getX() - unit->getX(), 2) + pow(cellPoint->getY() - unit->getY(), 2)) < DISTANCE_VIEW)
+                if ((sqrt(pow(cellPoint->getX() - unit->getX(), 2) + pow(cellPoint->getY() - unit->getY(), 2)) < DISTANCE_VIEW)
+                   && (cellPoint->getId() != unit->getId()))
                 {
                     unit->addNeighbor(cellPoint);
                 }

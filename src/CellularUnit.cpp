@@ -1,9 +1,9 @@
 #include "../include/CellularUnit.hpp"
 
-CellularUnit::CellularUnit(float x, float y)
-    : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0))
+CellularUnit::CellularUnit(float x, float y, long int id)
+    : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), id_(id)
 {
-    std::cout << " CellularUnit created : " << coords_.first << " " << coords_.second << std::endl;
+    std::cout << " CellularUnit id " << id_ << " created : " << coords_.first << " " << coords_.second << std::endl;
     // velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
     velocity_.first = 1.0;
 
@@ -59,4 +59,31 @@ void CellularUnit::updateVelocity()
         default:
             break;
     }
+}
+
+float CellularUnit::distanceTo(const CellularUnit *unit) const
+{
+    return sqrt(pow(unit->getX() - coords_.first, 2) + pow(unit->getY() - coords_.second, 2));
+}
+
+float CellularUnit::angleTo(const CellularUnit *unit) const
+{
+    return atan2(unit->getY() - coords_.second, unit->getX() - coords_.first);
+}
+
+bool CellularUnit::hasCollided(const CellularUnit *unit) const
+{
+    return (distanceTo(unit) < DISTANCE_COLLISION);
+}
+
+bool CellularUnit::hasCollidedNeighbor() const
+{
+    for (const CellularUnit* neighbor : neighbors_)
+    {
+        if (hasCollided(neighbor))
+        {
+            return 1;
+        }
+    }
+    return 0;
 }

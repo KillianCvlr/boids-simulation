@@ -44,7 +44,7 @@ private:
     bool renderQuadTree_ = false;
     bool renderFieldViews_ = false;
     bool renderCells_ = true;
-    bool renderProximity_ = true;
-    bool renderNeighboringLinks_ = false;
+    bool renderProximity_ = false;
+    bool renderNeighboringLinks_ = true;
 
 };
