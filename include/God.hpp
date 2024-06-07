@@ -26,11 +26,14 @@ public:
     void addCell(int x, int y);
     void updateNeighbours();
     void detectCollisions();
+    void removeDeadCells();
 
     inline const std::vector<CellularUnit>* getCellularUnits() const { return &cellularUnits_; }
     inline float getNbColumns() const { return screenX_;; }
     inline float getNbLines() const { return screenY_;; }
     inline QuadTree* getQuadTree() const { return quadTree_.get(); }
+    inline void switchDetectCollision() { detectCollision_ = !detectCollision_; }
+
 
 private:
     std::vector<CellularUnit> cellularUnits_;
@@ -39,6 +42,8 @@ private:
 
     std::unique_ptr<QuadTree> quadTree_;
     long int idCounter_ = 0;
+
+    bool detectCollision_;
 };
 
 

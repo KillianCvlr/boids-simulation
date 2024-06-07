@@ -158,7 +158,7 @@ void RenderHandler::renderProximity(const God *god)
 
 void RenderHandler::renderNeighboringLinks(const God *god)
 {
-    SDL_SetRenderDrawColor(renderer_.get(), SDL_CINNAMON);
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_AZURE);
     for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];

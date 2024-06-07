@@ -43,6 +43,7 @@ public:
     inline void setDead() { isAlive_ = false; }
     inline bool isAlive() const { return isAlive_; }
     inline long int getId() const { return id_; }
+    inline const CellularUnit* getAddress () const { return this; }
 
 private:
     std::pair<float, float> coords_;

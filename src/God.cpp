@@ -17,11 +17,12 @@ God::~God()
 
 void God::updateUniverse()
 {
+    removeDeadCells();
     moveCellularUnits();
     quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0));
     createQuadTree();
     updateNeighbours(); 
-    detectCollisions();
+    if (detectCollision_) detectCollisions();
     return;
 }
 
@@ -47,7 +48,7 @@ void God::createQuadTree()
 {
     for (int i = 0; i < (int)cellularUnits_.size(); i++)
     {
-        quadTree_->insertRecursive(&cellularUnits_[i]);
+        quadTree_->insertRecursive(cellularUnits_[i].getAddress());
     }
     return;
 }
@@ -87,6 +88,9 @@ void God::detectCollisions()
             std::cout << "Cell " << cellularUnits_[i].getId() << " has died" << std::endl;
         }
     }
-    
-    cellularUnits_.erase(std::remove_if(cellularUnits_.begin(), cellularUnits_.end(), [](CellularUnit &cellularUnit) { return !cellularUnit.isAlive(); }), cellularUnits_.end());
+}
+
+void God::removeDeadCells()
+{
+    cellularUnits_.erase(std::remove_if(cellularUnits_.begin(), cellularUnits_.end(), [](CellularUnit &cell) { return !cell.isAlive(); }), cellularUnits_.end());
 }

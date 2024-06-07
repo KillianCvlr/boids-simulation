@@ -18,12 +18,10 @@ public:
     ~QuadTree();
 
     void subdivide();
-    void insertRecursive(CellularUnit* unit);
+    void insertRecursive(const CellularUnit* unit);
     void renderRecursive(RenderHandler& renderHandler);
     void circleQuerryRecursive(CellularUnit* unit);
-    void clear();
-
-    
+    void clear();   
 
 private:
 
@@ -39,7 +37,7 @@ private:
     std::unique_ptr<QuadTree> southWest_;
     std::unique_ptr<QuadTree> southEast_;
 
-    std::list<CellularUnit *> points_;
+    std::list<const CellularUnit *> points_;
 
 };
 

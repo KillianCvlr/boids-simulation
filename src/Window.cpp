@@ -99,6 +99,10 @@ WindowState Window::handleEvents(SDL_Event e, God *god)
                 break;
                 
             case SDLK_c:
+                god->switchDetectCollision();
+                break;
+            
+            case SDLK_d:
                 renderHandler_.switchRenderCells();
                 renderHandler_.renderUniverse(god);
                 break;
