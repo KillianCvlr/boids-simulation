@@ -20,7 +20,10 @@ public:
     void subdivide();
     void insertRecursive(CellularUnit* unit);
     void renderRecursive(RenderHandler& renderHandler);
+    void circleQuerryRecursive(CellularUnit* unit);
     void clear();
+
+    
 
 private:
 

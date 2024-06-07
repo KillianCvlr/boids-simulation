@@ -21,7 +21,7 @@ public:
 
     void mainLoop();
 
-    WindowState handleEvents(SDL_Event event, God &god);
+    WindowState handleEvents(SDL_Event event, God *god);
 
 private:
 

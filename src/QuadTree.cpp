@@ -85,6 +85,34 @@ void QuadTree::renderRecursive(RenderHandler & renderer)
     return;
 }
 
+void QuadTree::circleQuerryRecursive(CellularUnit *unit)
+{
+    if (unit->getX() - DISTANCE_VIEW > x2_ || unit->getX() + DISTANCE_VIEW < x1_ || unit->getY() - DISTANCE_VIEW > y2_ || unit->getY() + DISTANCE_VIEW < y1_)
+    {
+        return;
+    }
+    else
+    {
+        if (northWest_ == nullptr)
+        {
+            for (auto cellPoint : points_)
+            {
+                if (sqrt(pow(cellPoint->getX() - unit->getX(), 2) + pow(cellPoint->getY() - unit->getY(), 2)) < DISTANCE_VIEW)
+                {
+                    unit->addNeighbor(cellPoint);
+                }
+            }
+        }
+        else
+        {
+            northWest_->circleQuerryRecursive(unit);
+            northEast_->circleQuerryRecursive(unit);
+            southWest_->circleQuerryRecursive(unit);
+            southEast_->circleQuerryRecursive(unit);
+        }
+    }
+}
+
 void QuadTree::clear()
 {
     northWest_.reset();
