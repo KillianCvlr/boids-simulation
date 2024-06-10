@@ -24,9 +24,12 @@ public:
     void createQuadTree();
     void moveCellularUnits();
     void addCell(int x, int y);
+    void addCells(int x, int y, int nbCells);
     void updateNeighbours();
     void detectCollisions();
     void removeDeadCells();
+
+    void printInfo();
 
     inline const std::vector<CellularUnit>* getCellularUnits() const { return &cellularUnits_; }
     inline float getNbColumns() const { return screenX_;; }

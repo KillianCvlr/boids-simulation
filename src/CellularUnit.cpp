@@ -4,8 +4,8 @@ CellularUnit::CellularUnit(float x, float y, long int id)
     : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), id_(id)
 {
     std::cout << " CellularUnit id " << id_ << " created : " << coords_.first << " " << coords_.second << std::endl;
-    // velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
-    velocity_.first = 1.0;
+    velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(VELOCITY_MAX)));
+    //velocity_.first = 1.0;
 
     // Angle between 0 and 2*PI
     velocity_.second  = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(2*M_PI)));

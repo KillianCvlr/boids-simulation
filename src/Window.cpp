@@ -116,6 +116,21 @@ WindowState Window::handleEvents(SDL_Event e, God *god)
                 renderHandler_.switchRenderNeighboringLinks();
                 renderHandler_.renderUniverse(god);
                 break;
+            
+            case SDLK_v:
+                renderHandler_.switchRenderVelocity();
+                renderHandler_.renderUniverse(god);
+                break;
+
+            case SDLK_a:
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                god->addCells(x, y, NB_ADDED_CELLS);
+                break;
+
+            case SDLK_i :
+                god->printInfo();
+                break;
                 
             default:
                 break;

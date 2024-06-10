@@ -68,6 +68,15 @@ void God::addCell(int x, int y)
     return;
 }
 
+void God::addCells(int x, int y, int nbCells)
+{
+    for (int i = 0; i < nbCells; i++)
+    {
+        addCell(x, y);
+    }
+    return;
+}
+
 void God::updateNeighbours()
 {
     for (int i = 0; i < (int)cellularUnits_.size(); i++)
@@ -93,4 +102,11 @@ void God::detectCollisions()
 void God::removeDeadCells()
 {
     cellularUnits_.erase(std::remove_if(cellularUnits_.begin(), cellularUnits_.end(), [](CellularUnit &cell) { return !cell.isAlive(); }), cellularUnits_.end());
+}
+
+void God::printInfo()
+{
+    std::cout << "Number of cellular units: " << cellularUnits_.size() << std::endl;
+    std::cout << "Total Units created: " << idCounter_ << std::endl;
+    return;
 }

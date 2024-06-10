@@ -55,6 +55,7 @@ void RenderHandler::renderUniverse(const God *god)
     if (renderQuadTree_) renderQuadTree(god);
     if (renderProximity_) renderProximity(god);
     if (renderNeighboringLinks_) renderNeighboringLinks(god);
+    if (renderVelocity_) renderVelocity(god);
 
     SDL_RenderPresent(renderer_.get());
     return;
@@ -145,6 +146,19 @@ void RenderHandler::renderQuadTree(const God *god)
     return;
 }
 
+void RenderHandler::renderVelocity(const God *god)
+{
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_YELLOW);
+    for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
+    {
+        CellularUnit cellularUnit = (*god->getCellularUnits())[i];
+        SDL_RenderDrawLine(renderer_.get(), cellularUnit.getX(), cellularUnit.getY(), 
+            cellularUnit.getX() + (cellularUnit.getVelocity().first / VELOCITY_MAX) * cos(cellularUnit.getVelocity().second) * DISTANCE_VIEW,
+            cellularUnit.getY() + (cellularUnit.getVelocity().first / VELOCITY_MAX) * sin(cellularUnit.getVelocity().second) * DISTANCE_VIEW);
+    }
+    return;
+}
+
 void RenderHandler::renderProximity(const God *god)
 {
     for (int i = 0; i < (int)god->getCellularUnits()->size(); i++)
@@ -177,4 +191,8 @@ void RenderHandler::drawrect(int x, int y, int x2, int y2)
     SDL_RenderDrawLine(renderer_.get(), x2, y2, x, y2);
     SDL_RenderDrawLine(renderer_.get(), x, y2, x, y);
     return;
+}
+
+double mapValue(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
+    return (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
 }

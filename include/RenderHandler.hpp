@@ -20,6 +20,7 @@ public:
     void renderFieldViews(const God* god);
     void renderFieldView(int x, int y, float angle);
     void renderQuadTree(const God* god);
+    void renderVelocity(const God* god);
 
     void renderProximity(const God* god);
     void renderNeighboringLinks(const God* god);
@@ -35,6 +36,7 @@ public:
     inline void switchRenderCells() { renderCells_ = !renderCells_; }
     inline void switchRenderProximity() { renderProximity_ = !renderProximity_; }
     inline void switchRenderNeighboringLinks() { renderNeighboringLinks_ = !renderNeighboringLinks_; }
+    inline void switchRenderVelocity() { renderVelocity_ = !renderVelocity_; }
 
 private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
@@ -45,6 +47,9 @@ private:
     bool renderFieldViews_ = false;
     bool renderCells_ = true;
     bool renderProximity_ = false;
-    bool renderNeighboringLinks_ = true;
+    bool renderNeighboringLinks_ = false;
+    bool renderVelocity_ = true;
 
 };
+
+double mapValue(double value, double fromLow, double fromHigh, double toLow, double toHigh);
