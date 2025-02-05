@@ -24,15 +24,15 @@ void QuadTree::subdivide()
 
     if (points_.size() > 0)
     {
-        for (auto cellPoint : points_)
+        for (auto const& point : points_)
         {
-            insertRecursive(cellPoint);
+            insertRecursive(point);
         }
         points_.clear();
     }
 }
 
-void QuadTree::insertRecursive(CellularUnit *unit)
+void QuadTree::insertRecursive(CellularUnit const& unit)
 {
     if (points_.size() < sizeMax_ && northWest_ == nullptr || level_ == MAX_LEVEL_QTREE)
     {
@@ -45,9 +45,9 @@ void QuadTree::insertRecursive(CellularUnit *unit)
             subdivide();
         }
 
-        if (unit->getX() < (x1_ + x2_) / 2)
+        if (unit.getX() < (x1_ + x2_) / 2)
         {
-            if (unit->getY() < (y1_ + y2_) / 2)
+            if (unit.getY() < (y1_ + y2_) / 2)
             {
                 northWest_->insertRecursive(unit);
             }
@@ -58,7 +58,7 @@ void QuadTree::insertRecursive(CellularUnit *unit)
         }
         else
         {
-            if (unit->getY() < (y1_ + y2_) / 2)
+            if (unit.getY() < (y1_ + y2_) / 2)
             {
                 northEast_->insertRecursive(unit);
             }
@@ -91,6 +91,7 @@ void QuadTree::clear()
     northEast_.reset();
     southWest_.reset();
     southEast_.reset();
+    points_.clear();
     return;
 }
 

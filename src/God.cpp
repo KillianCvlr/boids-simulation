@@ -16,8 +16,8 @@ God::~God()
 
 void God::updateUniverse()
 {
-    //quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0));
-    //createQuadTree();
+    quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0));
+    createQuadTree();
     moveCellularUnits();
     return;
 }
@@ -42,7 +42,7 @@ void God::createQuadTree()
 {
     for (int i = 0; i < cellularUnits_.size(); i++)
     {
-        quadTree_->insertRecursive(&cellularUnits_[i]);
+        quadTree_->insertRecursive(cellularUnits_[i]);
     }
     return;
 }
