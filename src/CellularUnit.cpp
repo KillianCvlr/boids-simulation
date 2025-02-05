@@ -13,6 +13,7 @@ CellularUnit::CellularUnit(float x, float y)
 
 CellularUnit::~CellularUnit()
 {
+    //std::cout << " CellularUnit destroyed : " << coords_.first << " " << coords_.second << std::endl;
 }
 
 

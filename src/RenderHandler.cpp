@@ -46,25 +46,28 @@ RenderHandler::~RenderHandler()
 }
 
 
-void RenderHandler::renderUniverse(God const& god)
+void RenderHandler::renderUniverse(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
     SDL_RenderClear(renderer_.get());
     if (renderCells_) renderCells(god);   
     if (renderFieldViews_) renderFieldViews(god);
     if (renderQuadTree_) renderQuadTree(god);
+    if (renderProximity_) renderProximity(god);
+    if (renderNeighboringLinks_) renderNeighboringLinks(god);
 
     SDL_RenderPresent(renderer_.get());
     return;
 }
 
 
-void RenderHandler::renderCells(God const& god)
+void RenderHandler::renderCells(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_AQUA);
 
-    for (auto &cellularUnit : god.getCellularUnits())
+    for (int i = 0; i < god->getCellularUnits()->size(); i++)
     {
+        CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
     }
     return;
@@ -117,11 +120,12 @@ void RenderHandler::drawDisk(int x1, int y1, int radius)
     return;
 }
 
-void RenderHandler::renderFieldViews(God const& god)
+void RenderHandler::renderFieldViews(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_WHITE);
-    for (auto &cellularUnit : god.getCellularUnits())
+    for (int i = 0; i < god->getCellularUnits()->size(); i++)
     {
+        CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getVelocity().second);
     }
     return;
@@ -134,10 +138,35 @@ void RenderHandler::renderFieldView(int x, int y, float angle)
     return;
 }
 
-void RenderHandler::renderQuadTree(God const& god)
+void RenderHandler::renderQuadTree(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_BRONZE);
-    god.getQuadTree()->renderRecursive(*this);
+    god->getQuadTree()->renderRecursive(*this);
+    return;
+}
+
+void RenderHandler::renderProximity(const God *god)
+{
+    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    {
+        CellularUnit cellularUnit = (*god->getCellularUnits())[i];
+        cellularUnit.getNeighbors().size() == 1 ? SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN) : SDL_SetRenderDrawColor(renderer_.get(), SDL_RED);
+        drawCircle(cellularUnit.getX(), cellularUnit.getY(), CELL_SIZE + DISTANCE_VIEW);
+    }
+    return;
+}
+
+void RenderHandler::renderNeighboringLinks(const God *god)
+{
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_CINNAMON);
+    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    {
+        CellularUnit cellularUnit = (*god->getCellularUnits())[i];
+        for (auto neighbor : cellularUnit.getNeighbors())
+        {
+            SDL_RenderDrawLine(renderer_.get(), cellularUnit.getX(), cellularUnit.getY(), neighbor->getX(), neighbor->getY());
+        }
+    }
     return;
 }
 

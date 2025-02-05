@@ -24,15 +24,15 @@ void QuadTree::subdivide()
 
     if (points_.size() > 0)
     {
-        for (auto const& point : points_)
+        for (auto cellPoint : points_)
         {
-            insertRecursive(point);
+            insertRecursive(cellPoint);
         }
         points_.clear();
     }
 }
 
-void QuadTree::insertRecursive(CellularUnit const& unit)
+void QuadTree::insertRecursive(CellularUnit *unit)
 {
     if (points_.size() < sizeMax_ && northWest_ == nullptr || level_ == MAX_LEVEL_QTREE)
     {
@@ -45,9 +45,9 @@ void QuadTree::insertRecursive(CellularUnit const& unit)
             subdivide();
         }
 
-        if (unit.getX() < (x1_ + x2_) / 2)
+        if (unit->getX() < (x1_ + x2_) / 2)
         {
-            if (unit.getY() < (y1_ + y2_) / 2)
+            if (unit->getY() < (y1_ + y2_) / 2)
             {
                 northWest_->insertRecursive(unit);
             }
@@ -58,7 +58,7 @@ void QuadTree::insertRecursive(CellularUnit const& unit)
         }
         else
         {
-            if (unit.getY() < (y1_ + y2_) / 2)
+            if (unit->getY() < (y1_ + y2_) / 2)
             {
                 northEast_->insertRecursive(unit);
             }
@@ -85,13 +85,40 @@ void QuadTree::renderRecursive(RenderHandler & renderer)
     return;
 }
 
+void QuadTree::circleQuerryRecursive(CellularUnit *unit)
+{
+    if (unit->getX() - DISTANCE_VIEW > x2_ || unit->getX() + DISTANCE_VIEW < x1_ || unit->getY() - DISTANCE_VIEW > y2_ || unit->getY() + DISTANCE_VIEW < y1_)
+    {
+        return;
+    }
+    else
+    {
+        if (northWest_ == nullptr)
+        {
+            for (auto cellPoint : points_)
+            {
+                if (sqrt(pow(cellPoint->getX() - unit->getX(), 2) + pow(cellPoint->getY() - unit->getY(), 2)) < DISTANCE_VIEW)
+                {
+                    unit->addNeighbor(cellPoint);
+                }
+            }
+        }
+        else
+        {
+            northWest_->circleQuerryRecursive(unit);
+            northEast_->circleQuerryRecursive(unit);
+            southWest_->circleQuerryRecursive(unit);
+            southEast_->circleQuerryRecursive(unit);
+        }
+    }
+}
+
 void QuadTree::clear()
 {
     northWest_.reset();
     northEast_.reset();
     southWest_.reset();
     southEast_.reset();
-    points_.clear();
     return;
 }
 

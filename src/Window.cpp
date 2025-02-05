@@ -29,9 +29,9 @@ void Window::mainLoop()
     while ( windowState_ == WindowState::RUNNING )
     {   
         mainLoopRunning :
-        windowState_ = handleEvents(e, god);
+        windowState_ = handleEvents(e, &god);
         god.updateUniverse();
-        renderHandler_.renderUniverse(god);
+        renderHandler_.renderUniverse(&god);
         SDL_Delay(1000 / FPS);
     }
 
@@ -44,7 +44,7 @@ void Window::mainLoop()
         std::cout << "Universe paused" << std::endl;
         while (windowState_ == WindowState::PAUSED)
         {
-            windowState_ = handleEvents(e, god);
+            windowState_ = handleEvents(e, &god);
         }
         if (windowState_ == WindowState::RUNNING)
         {
@@ -59,7 +59,7 @@ void Window::mainLoop()
     return;
 }
 
-WindowState Window::handleEvents(SDL_Event e, God &god)
+WindowState Window::handleEvents(SDL_Event e, God *god)
 {
     while (SDL_PollEvent(&e))
     {
@@ -80,11 +80,11 @@ WindowState Window::handleEvents(SDL_Event e, God &god)
                 break;
             
             case SDLK_n:
-                god.newUniverse(NB_CELLULAR_UNITS);
+                god->newUniverse(NB_CELLULAR_UNITS);
                 break;
             
             case SDLK_r:
-                god.destroyUniverse();
+                god->destroyUniverse();
                 std::cout << "THANOS ALL" << std::endl;
                 break;
 
@@ -97,8 +97,19 @@ WindowState Window::handleEvents(SDL_Event e, God &god)
                 renderHandler_.switchRenderFieldViews();
                 renderHandler_.renderUniverse(god);
                 break;
+                
             case SDLK_c:
                 renderHandler_.switchRenderCells();
+                renderHandler_.renderUniverse(god);
+                break;
+
+            case SDLK_p:
+                renderHandler_.switchRenderProximity();
+                renderHandler_.renderUniverse(god);
+                break;
+
+            case SDLK_l:
+                renderHandler_.switchRenderNeighboringLinks();
                 renderHandler_.renderUniverse(god);
                 break;
                 
@@ -110,7 +121,7 @@ WindowState Window::handleEvents(SDL_Event e, God &god)
         {
             int x, y;
             SDL_GetMouseState(&x, &y);
-            god.addCell(x, y);
+            god->addCell(x, y);
             renderHandler_.renderUniverse(god);
         }
     }

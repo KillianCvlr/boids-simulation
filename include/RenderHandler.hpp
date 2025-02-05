@@ -15,11 +15,14 @@ public:
     RenderHandler(char const *title, int const width, int const height);
     ~RenderHandler();
 
-    void renderUniverse(God const& god);
-    void renderCells(God const& god);
-    void renderFieldViews(God const& god);
+    void renderUniverse(const God* god);
+    void renderCells(const God* god);
+    void renderFieldViews(const God* god);
     void renderFieldView(int x, int y, float angle);
-    void renderQuadTree(God const& god);
+    void renderQuadTree(const God* god);
+
+    void renderProximity(const God* god);
+    void renderNeighboringLinks(const God* god);
 
     void drawrect(int x, int y, int x2, int y2);
     void drawCircle(int x, int y, int radius);
@@ -30,15 +33,18 @@ public:
     inline void switchRenderQuadTree() { renderQuadTree_ = !renderQuadTree_; }
     inline void switchRenderFieldViews() { renderFieldViews_ = !renderFieldViews_; }
     inline void switchRenderCells() { renderCells_ = !renderCells_; }
-
+    inline void switchRenderProximity() { renderProximity_ = !renderProximity_; }
+    inline void switchRenderNeighboringLinks() { renderNeighboringLinks_ = !renderNeighboringLinks_; }
 
 private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
     std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer_;
     std::pair<int, int> size_;
 
-    bool renderQuadTree_ = true;
-    bool renderFieldViews_ = true;
+    bool renderQuadTree_ = false;
+    bool renderFieldViews_ = false;
     bool renderCells_ = true;
+    bool renderProximity_ = true;
+    bool renderNeighboringLinks_ = false;
 
 };
