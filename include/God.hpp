@@ -3,7 +3,6 @@
 #include "CellularUnit.hpp"
 #include "QuadTree.hpp"
 
-#include "SDL.h"
 #include <iostream>
 #include <memory>
 #include <vector>

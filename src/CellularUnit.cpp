@@ -19,8 +19,8 @@ CellularUnit::~CellularUnit()
 
 void CellularUnit::move()
 {
-    coords_.first += velocity_.first * cos(velocity_.second) * CELL_SIZE;
-    coords_.second += velocity_.first * sin(velocity_.second) * CELL_SIZE;
+    coords_.first += velocity_.first * cos(velocity_.second);
+    coords_.second += velocity_.first * sin(velocity_.second);
 
     if (coords_.first < 0)
     {

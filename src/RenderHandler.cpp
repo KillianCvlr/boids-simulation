@@ -48,7 +48,7 @@ RenderHandler::~RenderHandler()
 
 void RenderHandler::renderUniverse(const God *god)
 {
-    SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_BLACK);
     SDL_RenderClear(renderer_.get());
     if (renderCells_) renderCells(god);   
     if (renderFieldViews_) renderFieldViews(god);
@@ -60,6 +60,26 @@ void RenderHandler::renderUniverse(const God *god)
     return;
 }
 
+void RenderHandler::renderCell(const CellularUnit cellularUnit){
+    // Simple Disk Cell
+    //drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
+
+    // Triangular Cell
+    const float velocityAngle = cellularUnit.getVelocity().second;
+    float x = cellularUnit.getX();
+    float y = cellularUnit.getY();
+
+    const std::vector< SDL_Vertex > verts =
+    {
+        { SDL_FPoint{ (x + 2*CELL_SIZE *cosf(velocityAngle)), y + 2*CELL_SIZE * sinf(velocityAngle) }, SDL_AZURE, SDL_FPoint{ 0 }, },
+        { SDL_FPoint{ x + CELL_SIZE *cosf(velocityAngle + M_PI_2), y + CELL_SIZE * sinf(velocityAngle + M_PI_2) }, SDL_AZURE, SDL_FPoint{ 0 }, },
+        { SDL_FPoint{ x + CELL_SIZE *cosf(velocityAngle - M_PI_2), y + CELL_SIZE * sinf(velocityAngle - M_PI_2) }, SDL_AZURE, SDL_FPoint{ 0 }, },
+    };
+
+    SDL_RenderGeometry( renderer_.get(), nullptr, verts.data(), 3, nullptr, 0 );
+
+}
+
 
 void RenderHandler::renderCells(const God *god)
 {
@@ -67,8 +87,8 @@ void RenderHandler::renderCells(const God *god)
 
     for (int i = 0; i < god->getCellularUnits()->size(); i++)
     {
-        CellularUnit cellularUnit = (*god->getCellularUnits())[i];
-        drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
+        const CellularUnit cellularUnit = (*god->getCellularUnits())[i];
+        renderCell(cellularUnit);
     }
     return;
 }

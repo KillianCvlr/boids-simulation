@@ -32,7 +32,7 @@ public:
     inline float getY() const { return coords_.second; }
     inline void setCoords(float x, float y) { coords_ = std::pair<float, float>(x, y); }
     inline void setVelocity(float x, float y) { velocity_ = std::pair<float, float>(x, y); }
-    inline std::pair<float, float> getVelocity() const { return velocity_; }
+    inline const std::pair<float, float> getVelocity() const { return velocity_; }
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }

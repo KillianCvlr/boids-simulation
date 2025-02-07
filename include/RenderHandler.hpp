@@ -5,6 +5,7 @@
 #include <memory>
 #include <cmath>
 
+#include "God.hpp"
 #include "SDLColors.hpp"
 
 class God;
@@ -16,6 +17,7 @@ public:
     ~RenderHandler();
 
     void renderUniverse(const God* god);
+    void renderCell(const CellularUnit cell);
     void renderCells(const God* god);
     void renderFieldViews(const God* god);
     void renderFieldView(int x, int y, float angle);
@@ -44,7 +46,7 @@ private:
     bool renderQuadTree_ = false;
     bool renderFieldViews_ = false;
     bool renderCells_ = true;
-    bool renderProximity_ = true;
+    bool renderProximity_ = false;
     bool renderNeighboringLinks_ = false;
 
 };
