@@ -40,6 +40,7 @@ void God::newUniverse(size_t nbCellularUnits)
 void God::destroyUniverse()
 {
     cellularUnits_.clear();
+    indexCellularUnits_ = 0;
 }
 
 void God::createQuadTree()

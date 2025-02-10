@@ -27,7 +27,8 @@ public:
     void updateVelocity();
     void updateVelocityPeriphericalView();
 
-    float getAngleToNeighbor(const CellularUnit*);
+    float getAngleToNeighbor(const CellularUnit *);
+    float getDistanceToNeighbor(const CellularUnit *);
 
     inline std::pair<float, float> getCoords() const { return coords_; }
     inline float getX() const { return coords_.first; }
@@ -42,6 +43,7 @@ public:
 
 private:
     std::pair<float, float> coords_;
+
     // Velocity is a pair of float, the first float is the speed, the second is the orientation of the cell (angle)
     std::pair<float, float> velocity_;
     std::list<const CellularUnit *> neighbors_ = {};

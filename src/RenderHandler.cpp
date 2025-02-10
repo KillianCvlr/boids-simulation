@@ -170,7 +170,7 @@ void RenderHandler::renderProximity(const God *god)
     for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
-        cellularUnit.getNeighbors().size() == 1 ? SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN) : SDL_SetRenderDrawColor(renderer_.get(), SDL_RED);
+        cellularUnit.getNeighbors().size() == 0 ? SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN) : SDL_SetRenderDrawColor(renderer_.get(), SDL_RED);
         drawCircle(cellularUnit.getX(), cellularUnit.getY(), CELL_SIZE + DISTANCE_VIEW);
     }
     return;

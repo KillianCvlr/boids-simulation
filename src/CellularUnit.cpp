@@ -1,9 +1,10 @@
 #include "../include/CellularUnit.hpp"
 
 CellularUnit::CellularUnit(float x, float y, size_t id)
-    : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), id_(id), behavior_(CellBehavior::PERIPHERICAL_VIEW)
+    : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), 
+    neighbors_(std::list<const CellularUnit *>()), id_(id), behavior_(CellBehavior::PERIPHERICAL_VIEW)
 {
-    std::cout << " CellularUnit created : " << coords_.first << " " << coords_.second << std::endl;
+    std::cout << " CellularUnit created : " << id << " (" << coords_.first << ", " << coords_.second << ")" << std::endl;
     // velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
     velocity_.first = 1.0;
 
@@ -17,9 +18,12 @@ CellularUnit::~CellularUnit()
 }
 
 float CellularUnit::getAngleToNeighbor(const CellularUnit * cellNeighbor){
-    return atan2f(cellNeighbor->getY() - coords_.second, cellNeighbor->getX() - coords_.second);
+    return atan2f(cellNeighbor->getY() - coords_.second, cellNeighbor->getX() - coords_.first);
 }
 
+float CellularUnit::getDistanceToNeighbor(const CellularUnit * cellNeighbor){
+    return (sqrt(pow(cellNeighbor->getX() - this->getX(), 2) + pow(cellNeighbor->getY() - this->getY(), 2)));
+}
 
 void CellularUnit::move()
 {
@@ -48,15 +52,15 @@ void CellularUnit::move()
 
 void CellularUnit::updateVelocityPeriphericalView(){
     for (std::list<const CellularUnit *>::iterator it = neighbors_.begin(); it != neighbors_.end(); ++it){
+
         float angleToNeighbor = getAngleToNeighbor(*it);
-        float diffAngle = fmodf(velocity_.second - angleToNeighbor, M_PI);
+        float diffAngle = fmodf(velocity_.second - angleToNeighbor, 2*M_PI);
         // Is the neighbor visible ?
         if(fabsf(diffAngle) <= ANGLE_VIEW / 2 ){
-            velocity_.second = M_PI_4f; 
-            printf("Velocity changed");    
+            float proximityFactor = (getDistanceToNeighbor(*it) / DISTANCE_VIEW);
+            velocity_.second += (proximityFactor) * (diffAngle/10); 
         }      
     }
-
 }
 
 void CellularUnit::updateVelocity()
