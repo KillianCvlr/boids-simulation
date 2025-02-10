@@ -8,7 +8,7 @@ CellularUnit::CellularUnit(float x, float y, size_t id)
     velocity_.first = 1.0;
 
     // Angle between 0 and 2*PI
-    velocity_.second  = static_cast <float> (rand() / (static_cast <float> (RAND_MAX/(2*M_PIf))) - M_PIf);
+    velocity_.second  = static_cast <float> (rand() / (static_cast <float> (RAND_MAX/(2*M_PI))) - M_PIf);
 }
 
 CellularUnit::~CellularUnit()

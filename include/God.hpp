@@ -13,11 +13,11 @@ class God
 {
 
 public:
-    God(float nbColulmns, float nbLines, int nbCellularUnits);
+    God(float nbColulmns, float nbLines, size_t nbCellularUnits);
     ~God();
 
     void updateUniverse();
-    void newUniverse(int nbCellularUnits);
+    void newUniverse(size_t nbCellularUnits);
     void destroyUniverse();
 
     void createQuadTree();

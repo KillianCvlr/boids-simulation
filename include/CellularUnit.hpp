@@ -38,7 +38,7 @@ public:
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }
-    inline const size_t getId(){return id_;}
+    inline size_t getId(){return id_;}
 
 private:
     std::pair<float, float> coords_;

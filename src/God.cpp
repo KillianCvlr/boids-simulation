@@ -1,7 +1,7 @@
 #include "../include/God.hpp"
 
 
-God::God(float nbColumns, float nbLines, int nbCellularUnits) :screenX_(nbColumns), screenY_(nbLines), quadTree_(nullptr)
+God::God(float nbColumns, float nbLines, size_t nbCellularUnits) :screenX_(nbColumns), screenY_(nbLines), quadTree_(nullptr), indexCellularUnits_(nbCellularUnits)
 {
     for (size_t i = 0; i < nbCellularUnits; i++)
     {
@@ -23,7 +23,7 @@ void God::updateUniverse()
     return;
 }
 
-void God::newUniverse(int nbCellularUnits)
+void God::newUniverse(size_t nbCellularUnits)
 {
     cellularUnits_.clear();
     for (size_t i = 0; i < nbCellularUnits; i++)
@@ -44,7 +44,7 @@ void God::destroyUniverse()
 
 void God::createQuadTree()
 {
-    for (int i = 0; i < cellularUnits_.size(); i++)
+    for (size_t i = 0; i < cellularUnits_.size(); i++)
     {
         quadTree_->insertRecursive(&cellularUnits_[i]);
     }
@@ -53,7 +53,7 @@ void God::createQuadTree()
 
 void God::moveCellularUnits()
 {
-    for (int i = 0; i < cellularUnits_.size(); i++)
+    for (size_t i = 0; i < cellularUnits_.size(); i++)
     {
         cellularUnits_[i].move();
     }
@@ -69,7 +69,7 @@ void God::addCell(int x, int y)
 
 void God::updateNeighbours()
 {
-    for (int i = 0; i < cellularUnits_.size(); i++)
+    for (size_t i = 0; i < cellularUnits_.size(); i++)
     {
         cellularUnits_[i].clearNeighbors();
         quadTree_->circleQuerryRecursive(&cellularUnits_[i]);

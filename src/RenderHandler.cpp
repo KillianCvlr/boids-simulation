@@ -71,9 +71,9 @@ void RenderHandler::renderCell(const CellularUnit cellularUnit){
 
     const std::vector< SDL_Vertex > verts =
     {
-        { SDL_FPoint{ (x + 2*CELL_SIZE *cosf(velocityAngle)), y + 2*CELL_SIZE * sinf(velocityAngle) }, SDL_AZURE, SDL_FPoint{ 0 }, },
-        { SDL_FPoint{ x + CELL_SIZE *cosf(velocityAngle + M_PI_2), y + CELL_SIZE * sinf(velocityAngle + M_PI_2) }, SDL_AZURE, SDL_FPoint{ 0 }, },
-        { SDL_FPoint{ x + CELL_SIZE *cosf(velocityAngle - M_PI_2), y + CELL_SIZE * sinf(velocityAngle - M_PI_2) }, SDL_AZURE, SDL_FPoint{ 0 }, },
+        { SDL_FPoint{ (x + 2*CELL_SIZE *cosf(velocityAngle)), y + 2*CELL_SIZE * sinf(velocityAngle) }, {SDL_AZURE}, SDL_FPoint{ 0, 0 }, },
+        { SDL_FPoint{ x + CELL_SIZE *cosf(velocityAngle + M_PI_2), y + CELL_SIZE * sinf(velocityAngle + M_PI_2) }, {SDL_AZURE}, SDL_FPoint{ 0, 0 }, },
+        { SDL_FPoint{ x + CELL_SIZE *cosf(velocityAngle - M_PI_2), y + CELL_SIZE * sinf(velocityAngle - M_PI_2) }, {SDL_AZURE}, SDL_FPoint{ 0, 0 }, },
     };
 
     SDL_RenderGeometry( renderer_.get(), nullptr, verts.data(), 3, nullptr, 0 );
@@ -85,7 +85,7 @@ void RenderHandler::renderCells(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_AQUA);
 
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         const CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         renderCell(cellularUnit);
@@ -143,7 +143,7 @@ void RenderHandler::drawDisk(int x1, int y1, int radius)
 void RenderHandler::renderFieldViews(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_WHITE);
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getVelocity().second);
@@ -167,7 +167,7 @@ void RenderHandler::renderQuadTree(const God *god)
 
 void RenderHandler::renderProximity(const God *god)
 {
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         cellularUnit.getNeighbors().size() == 1 ? SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN) : SDL_SetRenderDrawColor(renderer_.get(), SDL_RED);
@@ -179,7 +179,7 @@ void RenderHandler::renderProximity(const God *god)
 void RenderHandler::renderNeighboringLinks(const God *god)
 {
     SDL_SetRenderDrawColor(renderer_.get(), SDL_CINNAMON);
-    for (int i = 0; i < god->getCellularUnits()->size(); i++)
+    for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
         for (auto neighbor : cellularUnit.getNeighbors())
