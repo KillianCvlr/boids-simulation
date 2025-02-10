@@ -8,24 +8,26 @@
 
 #include "DefaultValues.hpp"
 
-
 enum class CellBehavior
 {
     NONE,
     ACCELERATE,
     DECELERATE,
-    TURN
+    PERIPHERICAL_VIEW
 };
 
 class CellularUnit
 {
 
 public:
-    CellularUnit(float x, float y);
+    CellularUnit(float x, float y, size_t id);
     ~CellularUnit();
 
     void move();
     void updateVelocity();
+    void updateVelocityPeriphericalView();
+
+    float getAngleToNeighbor(const CellularUnit*);
 
     inline std::pair<float, float> getCoords() const { return coords_; }
     inline float getX() const { return coords_.first; }
@@ -36,12 +38,14 @@ public:
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }
+    inline const size_t getId(){return id_;}
 
 private:
     std::pair<float, float> coords_;
-    // Vecocity is a pair of float, the first float is the speed, the second is the angle
+    // Velocity is a pair of float, the first float is the speed, the second is the orientation of the cell (angle)
     std::pair<float, float> velocity_;
     std::list<const CellularUnit *> neighbors_ = {};
+    size_t id_;
 
     CellBehavior behavior_;
 

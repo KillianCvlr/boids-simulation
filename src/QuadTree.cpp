@@ -97,7 +97,8 @@ void QuadTree::circleQuerryRecursive(CellularUnit *unit)
         {
             for (auto cellPoint : points_)
             {
-                if (sqrt(pow(cellPoint->getX() - unit->getX(), 2) + pow(cellPoint->getY() - unit->getY(), 2)) < DISTANCE_VIEW)
+                if (sqrt(pow(cellPoint->getX() - unit->getX(), 2) + pow(cellPoint->getY() - unit->getY(), 2)) < DISTANCE_VIEW &&
+                    unit->getId() != cellPoint->getId())
                 {
                     unit->addNeighbor(cellPoint);
                 }

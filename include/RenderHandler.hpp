@@ -8,9 +8,6 @@
 #include "God.hpp"
 #include "SDLColors.hpp"
 
-class God;
-
-
 class RenderHandler {
 public:
     RenderHandler(char const *title, int const width, int const height);

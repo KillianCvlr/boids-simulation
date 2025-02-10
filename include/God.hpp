@@ -36,6 +36,7 @@ private:
     float screenY_;
 
     std::unique_ptr<QuadTree> quadTree_;
+    size_t indexCellularUnits_;
 };
 
 
