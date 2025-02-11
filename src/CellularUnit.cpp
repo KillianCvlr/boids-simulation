@@ -1,8 +1,49 @@
 #include "../include/CellularUnit.hpp"
 
+//Overloading operators for the std::pair<float, float>
+// Addition of two pairs
+std::pair<float, float> operator+(const std::pair<float, float>& a, const std::pair<float, float>& b) {
+    return {a.first + b.first, a.second + b.second};
+}
+
+// Multiplication by scalar (scalar * vecteur)
+std::pair<float, float> operator*(float scalar, const std::pair<float, float>& vec) {
+    return {scalar * vec.first, scalar * vec.second};
+}
+
+// Multiplication by scalar (vecteur * scalar)
+std::pair<float, float> operator*(const std::pair<float, float>& vec, float scalar) {
+    return {vec.first * scalar, vec.second * scalar};
+}
+
+// Multiplication part by part of two vecors
+std::pair<float, float> operator*(const std::pair<float, float>& a, const std::pair<float, float>& b) {
+    return {a.first * b.first, a.second * b.second};
+}
+
+// from x,y to A, theta
+std::pair<float, float> cartesianToPolar(const std::pair<float, float>& cartesian) {
+    float x = cartesian.first;
+    float y = cartesian.second;
+    float A = std::sqrt(x * x + y * y);
+    float theta = std::atan2(y, x);
+    return std::make_pair(A, theta);
+}
+
+void normalizePair(std::pair<float, float> vec){
+    float norm = std::sqrt(vec.first * vec.first + vec.second * vec.second);
+    if (norm != 0.0f) {
+        vec.first /= norm;
+        vec.second /= norm;
+    }
+}
+
+/*****************************************************************************/
+
 CellularUnit::CellularUnit(float x, float y, size_t id)
     : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), 
-    neighbors_(std::list<const CellularUnit *>()), id_(id), behavior_(CellBehavior::PERIPHERICAL_VIEW)
+    acceleration_(std::pair<float, float>(0.0 , 0.0)), 
+    neighbors_(std::list<const CellularUnit *>()), id_(id), behavior_(CellBehavior::FLOCKING)
 {
     std::cout << " CellularUnit created : " << id << " (" << coords_.first << ", " << coords_.second << ")" << std::endl;
     // velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
@@ -50,7 +91,7 @@ void CellularUnit::move()
     }
 }
 
-void CellularUnit::updateVelocityPeriphericalView(){
+void CellularUnit::updateAccelPeriphericalView(){
     for (std::list<const CellularUnit *>::iterator it = neighbors_.begin(); it != neighbors_.end(); ++it){
 
         float angleToNeighbor = getAngleToNeighbor(*it);
@@ -63,22 +104,42 @@ void CellularUnit::updateVelocityPeriphericalView(){
     }
 }
 
+void CellularUnit::updateAccelFlocking(){
+    if (neighbors_.size() == 0) return;
+
+    // Coherence :
+    std::pair<float, float> centerOfNeighbors = {0 ,0 };
+    for (const auto& neighbor : neighbors_){
+        centerOfNeighbors.first += getDistanceToNeighbor(neighbor);
+        centerOfNeighbors.second += getAngleToNeighbor(neighbor);
+    }
+
+    centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
+    acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
+
+    // TODOOOOOOOO    
+
+}
+
 void CellularUnit::updateVelocity()
 {
+    acceleration_ = 0 * acceleration_;
     switch(behavior_)
     {
         case CellBehavior::NONE:
             break;
-        case CellBehavior::ACCELERATE:
-            velocity_.first += 0.1;
+        case CellBehavior::FLOCKING:
+            updateAccelFlocking();
             break;
         case CellBehavior::DECELERATE:
             velocity_.first -= 0.1;
             break;
         case CellBehavior::PERIPHERICAL_VIEW:
-            updateVelocityPeriphericalView();
+            updateAccelPeriphericalView();
             break;
         default:
             break;
     }
+    velocity_ = velocity_ + cartesianToPolar(acceleration_);
+    velocity_.first = fminf(velocity_.first, MAX_SPEED);
 }

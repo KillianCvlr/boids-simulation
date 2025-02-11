@@ -11,7 +11,7 @@
 enum class CellBehavior
 {
     NONE,
-    ACCELERATE,
+    FLOCKING,
     DECELERATE,
     PERIPHERICAL_VIEW
 };
@@ -25,7 +25,8 @@ public:
 
     void move();
     void updateVelocity();
-    void updateVelocityPeriphericalView();
+    void updateAccelPeriphericalView();
+    void updateAccelFlocking();
 
     float getAngleToNeighbor(const CellularUnit *);
     float getDistanceToNeighbor(const CellularUnit *);
@@ -36,6 +37,7 @@ public:
     inline void setCoords(float x, float y) { coords_ = std::pair<float, float>(x, y); }
     inline void setVelocity(float x, float y) { velocity_ = std::pair<float, float>(x, y); }
     inline const std::pair<float, float> getVelocity() const { return velocity_; }
+    inline const std::pair<float, float> getAcceleration() const { return acceleration_; }
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }
@@ -46,6 +48,7 @@ private:
 
     // Velocity is a pair of float, the first float is the speed, the second is the orientation of the cell (angle)
     std::pair<float, float> velocity_;
+    std::pair<float, float> acceleration_;
     std::list<const CellularUnit *> neighbors_ = {};
     size_t id_;
 

@@ -29,13 +29,6 @@ RenderHandler::RenderHandler(char const *title, int const width, int const heigh
     }
 
     std::cout << "SDL_CreateRenderer Success" << std::endl;
-
-    // Chargement des textures
-    
-
-    std::cout << "Textures loaded" << std::endl;
-
-
 }
 
 RenderHandler::~RenderHandler()
