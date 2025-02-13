@@ -109,12 +109,24 @@ void CellularUnit::updateAccelFlocking(){
 
     // Coherence :
     std::pair<float, float> centerOfNeighbors = {0 ,0 };
-    for (const auto& neighbor : neighbors_){
+    std::pair<float, float> midVelocity = {0 ,0 };
+
+    for (auto it = neighbors_.begin(); it != neighbors_.end(); ++it){
+        const CellularUnit* neighbor = *it;
         centerOfNeighbors.first += getDistanceToNeighbor(neighbor);
-        centerOfNeighbors.second += getAngleToNeighbor(neighbor);
+        centerOfNeighbors.second -= getAngleToNeighbor(neighbor);
+
+        midVelocity = midVelocity + neighbor->getVelocity();
     }
 
     centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
+    centerOfNeighbors.second = fmodf(centerOfNeighbors.second, 2*M_PI);
+
+    midVelocity = midVelocity * (1 / neighbors_.size());
+    midVelocity.second = fmodf(midVelocity.second, 2*M_PI);
+
+    acceleration_ = acceleration_ + (midVelocity *( FORCE_FACTOR));
+
     acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
 
     // TODOOOOOOOO    
@@ -140,6 +152,6 @@ void CellularUnit::updateVelocity()
         default:
             break;
     }
-    velocity_ = velocity_ + cartesianToPolar(acceleration_);
+    velocity_ = velocity_ + acceleration_;
     velocity_.first = fminf(velocity_.first, MAX_SPEED);
 }
