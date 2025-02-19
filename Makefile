@@ -6,7 +6,7 @@ CFLAGS ?= -Wall -Wextra -g -std=c++20 $(SDL_CFLAGS)
 SDL_LDLIBS := $(shell sdl2-config --libs)
 LDLIBS ?= -lm $(SDL_LDLIBS)
 
-EXEC = cellular-automata
+EXEC = boids-simulation
 
 INCLUDE_PATH ?= ./include
 SRC_PATH = ./src

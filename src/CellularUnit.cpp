@@ -127,7 +127,7 @@ void CellularUnit::updateAccelFlocking(){
 
     acceleration_ = acceleration_ + (midVelocity *( FORCE_FACTOR));
 
-    acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
+    //acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
 
     // TODOOOOOOOO    
 
@@ -153,5 +153,5 @@ void CellularUnit::updateVelocity()
             break;
     }
     velocity_ = velocity_ + acceleration_;
-    velocity_.first = fminf(velocity_.first, MAX_SPEED);
+    velocity_.first = fmaxf(fminf(velocity_.first, MAX_SPEED), 0 );
 }
