@@ -1,4 +1,4 @@
-# Crowd-simulation
+# Boids-Simulation
 A (On-going) cellular automata in c++  that use SDL2 for rendering
 
 ## Goal
@@ -12,9 +12,9 @@ It also uses the sdl2 library :
 >sudo apt install sdl2-dev
 
 ## Next steps : 
- [] Flocking
- [] Options when launching
- [] Adding eating ressources 
- [] Adding dying
- [] Adding mating 
- [] Adding Communication between BOIDS
+ -[] Flocking
+ -[] Options when launching
+ -[] Adding eating ressources 
+ -[] Adding dying
+ -[] Adding mating 
+ -[] Adding Communication between BOIDS
