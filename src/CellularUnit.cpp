@@ -30,6 +30,13 @@ std::pair<float, float> cartesianToPolar(const std::pair<float, float>& cartesia
     return std::make_pair(A, theta);
 }
 
+// from A, theta to x, y
+std::pair<float, float> polarToCartesian(const std::pair<float, float>& cartesian) {
+    float A = cartesian.first;
+    float theta = cartesian.second;
+    return std::make_pair(A * cosf(theta), A * sinf(theta));
+}
+
 void normalizePair(std::pair<float, float> vec){
     float norm = std::sqrt(vec.first * vec.first + vec.second * vec.second);
     if (norm != 0.0f) {
@@ -41,16 +48,13 @@ void normalizePair(std::pair<float, float> vec){
 /*****************************************************************************/
 
 CellularUnit::CellularUnit(float x, float y, size_t id)
-    : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), 
+    : coords_(std::pair<float, float>(x, y)), velocity_(std::pair<float, float>(0.0 , 0.0)), cellAngle_ (0.),
     acceleration_(std::pair<float, float>(0.0 , 0.0)), 
     neighbors_(std::list<const CellularUnit *>()), id_(id), behavior_(CellBehavior::FLOCKING)
 {
-    std::cout << " CellularUnit created : " << id << " (" << coords_.first << ", " << coords_.second << ")" << std::endl;
-    // velocity_.first = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(10.0)));
-    velocity_.first = 1.0;
-
-    // Angle between 0 and 2*PI
-    velocity_.second  = static_cast <float> (rand() / (static_cast <float> (RAND_MAX/(2*M_PI))) - M_PIf);
+    cellAngle_ = static_cast <float> (rand() / (static_cast <float> (RAND_MAX/(2*M_PI))) - M_PIf);
+    velocity_ = polarToCartesian(std::pair(1., cellAngle_));
+    std::cout << " CellularUnit created : " << id << " (" << coords_.first << ", " << coords_.second << ", " << cellAngle_ << ")" << std::endl;
 }
 
 CellularUnit::~CellularUnit()
