@@ -41,8 +41,8 @@ public:
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }
-    inline const float getCellAngle() const {return cellAngle_;}
-    inline const void actualizeAngle() {cellAngle_ = atan2f(coords_.second, coords_.first);}
+    inline float getCellAngle() const {return cellAngle_;}
+    inline void actualizeAngle() {cellAngle_ = atan2f(velocity_.second, velocity_.first);}
     inline size_t getId(){return id_;}
 
 private:

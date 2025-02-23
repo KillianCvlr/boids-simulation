@@ -58,7 +58,7 @@ void RenderHandler::renderCell(const CellularUnit cellularUnit){
     //drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
 
     // Triangular Cell
-    const float velocityAngle = cellularUnit.getVelocity().second;
+    const float velocityAngle = cellularUnit.getCellAngle();
     float x = cellularUnit.getX();
     float y = cellularUnit.getY();
 
@@ -139,7 +139,7 @@ void RenderHandler::renderFieldViews(const God *god)
     for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
-        renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getVelocity().second);
+        renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getCellAngle());
     }
     return;
 }

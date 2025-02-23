@@ -37,12 +37,16 @@ std::pair<float, float> polarToCartesian(const std::pair<float, float>& cartesia
     return std::make_pair(A * cosf(theta), A * sinf(theta));
 }
 
-void normalizePair(std::pair<float, float> vec){
-    float norm = std::sqrt(vec.first * vec.first + vec.second * vec.second);
+void normalizePair(std::pair<float, float> vect){
+    float norm = std::sqrt(vect.first * vect.first + vect.second * vect.second);
     if (norm != 0.0f) {
-        vec.first /= norm;
-        vec.second /= norm;
+        vect.first /= norm;
+        vect.second /= norm;
     }
+}
+
+float getMagnitude(const std::pair<float, float> vect){
+    return std::sqrt(vect.first * vect.first + vect.second * vect.second);
 }
 
 /*****************************************************************************/
@@ -73,8 +77,8 @@ float CellularUnit::getDistanceToNeighbor(const CellularUnit * cellNeighbor){
 void CellularUnit::move()
 {
     updateVelocity();
-    coords_.first += velocity_.first * cos(velocity_.second);
-    coords_.second += velocity_.first * sin(velocity_.second);
+    coords_.first += velocity_.first;
+    coords_.second += velocity_.second;
 
     if (coords_.first < 0)
     {
@@ -96,32 +100,32 @@ void CellularUnit::move()
 }
 
 void CellularUnit::updateAccelPeriphericalView(){
-    for (std::list<const CellularUnit *>::iterator it = neighbors_.begin(); it != neighbors_.end(); ++it){
+//     for (std::list<const CellularUnit *>::iterator it = neighbors_.begin(); it != neighbors_.end(); ++it){
 
-        float angleToNeighbor = getAngleToNeighbor(*it);
-        float diffAngle = fmodf(velocity_.second - angleToNeighbor, 2*M_PI);
-        // Is the neighbor visible ?
-        if(fabsf(diffAngle) <= ANGLE_VIEW / 2 ){
-            float proximityFactor = (getDistanceToNeighbor(*it) / DISTANCE_VIEW);
-            velocity_.second += (proximityFactor) * (diffAngle/10); 
-        }      
-    }
+//         float angleToNeighbor = getAngleToNeighbor(*it);
+//         float diffAngle = fmodf(velocity_.second - angleToNeighbor, 2*M_PI);
+//         // Is the neighbor visible ?
+//         if(fabsf(diffAngle) <= ANGLE_VIEW / 2 ){
+//             float proximityFactor = (getDistanceToNeighbor(*it) / DISTANCE_VIEW);
+//             velocity_.second += (proximityFactor) * (diffAngle/10); 
+//         }      
+//     }
 }
 
 void CellularUnit::updateAccelFlocking(){
-    if (neighbors_.size() == 0) return;
+    // if (neighbors_.size() == 0) return;
 
-    // Coherence :
-    std::pair<float, float> centerOfNeighbors = {0 ,0 };
-    for (const auto& neighbor : neighbors_){
-        centerOfNeighbors.first += getDistanceToNeighbor(neighbor);
-        centerOfNeighbors.second += getAngleToNeighbor(neighbor);
-    }
+    // // Coherence :
+    // std::pair<float, float> centerOfNeighbors = {0 ,0 };
+    // for (const auto& neighbor : neighbors_){
+    //     centerOfNeighbors.first += getDistanceToNeighbor(neighbor);
+    //     centerOfNeighbors.second += getAngleToNeighbor(neighbor);
+    // }
 
-    centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
-    acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
+    // centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
+    // acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
 
-    // TODOOOOOOOO    
+    // // TODOOOOOOOO    
 
 }
 
@@ -144,6 +148,11 @@ void CellularUnit::updateVelocity()
         default:
             break;
     }
-    velocity_ = velocity_ + cartesianToPolar(acceleration_);
-    velocity_.first = fminf(velocity_.first, MAX_SPEED);
+    velocity_ = velocity_ + (acceleration_ * DT);
+
+    if(getMagnitude(velocity_) > MAX_SPEED) {
+        normalizePair(velocity_);
+        velocity_ = velocity_ * MAX_SPEED;
+    }
+    this->actualizeAngle();
 }
