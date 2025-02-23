@@ -17,7 +17,7 @@
 
 #define SIZE_MAX_QTREE 2
 #define MAX_LEVEL_QTREE 20
-#define FORCE_FACTOR 0.05
+#define FORCE_FACTOR 0.03
 #define MAX_SPEED 1.0
 #define MAX_ACCEL 1.0
 
