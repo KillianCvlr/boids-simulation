@@ -121,7 +121,8 @@ void CellularUnit::updateAccelFlocking(){
         centerOfNeighbors.first += neighbor->getX() - coords_.first;
         centerOfNeighbors.second += neighbor->getY() - coords_.second;
     }
-    centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
+    centerOfNeighbors.first = centerOfNeighbors.first / (float)(neighbors_.size());
+    centerOfNeighbors.second = centerOfNeighbors.second / (float)(neighbors_.size());
     acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
 
     // TODOOOOOOOO    
