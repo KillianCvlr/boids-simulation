@@ -48,6 +48,8 @@ void RenderHandler::renderUniverse(const God *god)
     if (renderQuadTree_) renderQuadTree(god);
     if (renderProximity_) renderProximity(god);
     if (renderNeighboringLinks_) renderNeighboringLinks(god);
+    if (renderFirst_) renderFirst(god);
+    
 
     SDL_RenderPresent(renderer_.get());
     return;
@@ -182,6 +184,25 @@ void RenderHandler::renderNeighboringLinks(const God *god)
     }
     return;
 }
+
+void RenderHandler::renderFirst(const God *god)
+{
+    if(god->getIndexCellularUnits() ==   0) return;
+    CellularUnit firstCell = (*god->getCellularUnits())[0];
+    float x = firstCell.getX();
+    float y = firstCell.getY();
+
+    // Red Line = Velocity
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_RUBY);
+    SDL_RenderDrawLine(renderer_.get(), x, y, x + ((firstCell.getVelocity().first / MAX_SPEED) * DISTANCE_VIEW), y + ((firstCell.getVelocity().second / MAX_SPEED) * DISTANCE_VIEW));
+    // Green Line = Acceleration
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN);
+    SDL_RenderDrawLine(renderer_.get(), x, y, x + ((firstCell.getAcceleration().first / MAX_SPEED) * DISTANCE_VIEW), y + ((firstCell.getAcceleration().second / MAX_SPEED) * DISTANCE_VIEW));
+
+    return;
+}
+
+
 
 void RenderHandler::drawrect(int x, int y, int x2, int y2)
 {   

@@ -57,7 +57,7 @@ CellularUnit::CellularUnit(float x, float y, size_t id)
     neighbors_(std::list<const CellularUnit *>()), id_(id), behavior_(CellBehavior::FLOCKING)
 {
     cellAngle_ = static_cast <float> (rand() / (static_cast <float> (RAND_MAX/(2*M_PI))) - M_PIf);
-    velocity_ = polarToCartesian(std::pair(1., cellAngle_));
+    velocity_ = polarToCartesian(std::pair(MAX_SPEED, cellAngle_));
     std::cout << " CellularUnit created : " << id << " (" << coords_.first << ", " << coords_.second << ", " << cellAngle_ << ")" << std::endl;
 }
 
@@ -113,19 +113,22 @@ void CellularUnit::updateAccelPeriphericalView(){
 }
 
 void CellularUnit::updateAccelFlocking(){
-    // if (neighbors_.size() == 0) return;
+    if (neighbors_.size() == 0) return;
 
-    // // Coherence :
-    // std::pair<float, float> centerOfNeighbors = {0 ,0 };
-    // for (const auto& neighbor : neighbors_){
-    //     centerOfNeighbors.first += getDistanceToNeighbor(neighbor);
-    //     centerOfNeighbors.second += getAngleToNeighbor(neighbor);
-    // }
+    // Coherence :
+    std::pair<float, float> centerOfNeighbors = {0 ,0 };
+    for (const auto& neighbor : neighbors_){
+        centerOfNeighbors.first += neighbor->getX() - coords_.first;
+        centerOfNeighbors.second += neighbor->getY() - coords_.second;
+    }
+    centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
+    acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
 
-    // centerOfNeighbors = centerOfNeighbors * (1 / neighbors_.size());
-    // acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
-
-    // // TODOOOOOOOO    
+    // TODOOOOOOOO    
+    if(getMagnitude(acceleration_) > MAX_SPEED) {
+        normalizePair(acceleration_);
+        acceleration_ = acceleration_ * MAX_SPEED;
+    }
 
 }
 

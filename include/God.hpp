@@ -29,6 +29,7 @@ public:
     inline float getNbColumns() const { return screenX_;; }
     inline float getNbLines() const { return screenY_;; }
     inline QuadTree* getQuadTree() const { return quadTree_.get(); }
+    inline size_t getIndexCellularUnits() const {return indexCellularUnits_;}
 
 private:
     std::vector<CellularUnit> cellularUnits_;

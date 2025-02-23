@@ -22,6 +22,7 @@ public:
 
     void renderProximity(const God* god);
     void renderNeighboringLinks(const God* god);
+    void renderFirst(const God* god);
 
     void drawrect(int x, int y, int x2, int y2);
     void drawCircle(int x, int y, int radius);
@@ -34,6 +35,7 @@ public:
     inline void switchRenderCells() { renderCells_ = !renderCells_; }
     inline void switchRenderProximity() { renderProximity_ = !renderProximity_; }
     inline void switchRenderNeighboringLinks() { renderNeighboringLinks_ = !renderNeighboringLinks_; }
+    inline void switchRenderFirst() { renderFirst_ = !renderFirst_; }
 
 private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
@@ -45,5 +47,6 @@ private:
     bool renderCells_ = true;
     bool renderProximity_ = false;
     bool renderNeighboringLinks_ = false;
+    bool renderFirst_ = true;
 
 };
