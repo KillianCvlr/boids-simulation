@@ -194,11 +194,17 @@ void RenderHandler::renderFirst(const God *god)
 
     // Red Line = Velocity
     SDL_SetRenderDrawColor(renderer_.get(), SDL_RUBY);
-    SDL_RenderDrawLine(renderer_.get(), x, y, x + ((firstCell.getVelocity().first / MAX_SPEED) * DISTANCE_VIEW), y + ((firstCell.getVelocity().second / MAX_SPEED) * DISTANCE_VIEW));
+    SDL_RenderDrawLine(renderer_.get(), x, y,
+         x + ((firstCell.getVelocity().first / (MAX_SPEED)) * DISTANCE_VIEW),
+         y + ((firstCell.getVelocity().second / (MAX_SPEED)) * DISTANCE_VIEW));
+    
     // Green Line = Acceleration
     SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN);
-    SDL_RenderDrawLine(renderer_.get(), x, y, x + ((firstCell.getAcceleration().first / MAX_SPEED) * DISTANCE_VIEW), y + ((firstCell.getAcceleration().second / MAX_SPEED) * DISTANCE_VIEW));
-    // Yellow Disk for neighbors 
+    SDL_RenderDrawLine(renderer_.get(), x, y,
+         x + ((firstCell.getAcceleration().first / MAX_ACCEL) * DISTANCE_VIEW),
+         y + ((firstCell.getAcceleration().second / MAX_ACCEL) * DISTANCE_VIEW));
+    
+    // Yellow Circle for center of mass of neighbors 
     std::pair<float, float> centerOfNeighbors = {0 ,0 };
     for (const auto& neighbor : firstCell.getNeighbors()){
         centerOfNeighbors.first += neighbor->getX() - x;

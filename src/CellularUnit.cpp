@@ -126,10 +126,6 @@ void CellularUnit::updateAccelFlocking(){
     acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
 
     // TODOOOOOOOO    
-    if(getMagnitude(acceleration_) > MAX_SPEED) {
-        normalizePair(acceleration_);
-        acceleration_ = acceleration_ * MAX_SPEED;
-    }
 
 }
 
@@ -153,10 +149,9 @@ void CellularUnit::updateVelocity()
             break;
     }
     velocity_ = velocity_ + (acceleration_ * DT);
-
-    if(getMagnitude(velocity_) > MAX_SPEED) {
-        normalizePair(velocity_);
-        velocity_ = velocity_ * MAX_SPEED;
-    }
     this->actualizeAngle();
+    if(getMagnitude(velocity_) > MAX_SPEED) {
+        velocity_ = polarToCartesian(std::pair(MAX_SPEED, cellAngle_));
+    }
+    
 }
