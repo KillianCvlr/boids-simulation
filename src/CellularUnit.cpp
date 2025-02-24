@@ -117,13 +117,25 @@ void CellularUnit::updateAccelFlocking(){
 
     // Coherence :
     std::pair<float, float> centerOfNeighbors = {0 ,0 };
+    // Alignment
+    std::pair<float, float> averageVelocity = {0 ,0 };
+
     for (const auto& neighbor : neighbors_){
         centerOfNeighbors.first += neighbor->getX() - coords_.first;
         centerOfNeighbors.second += neighbor->getY() - coords_.second;
+
+        averageVelocity.first += neighbor->getVelocity().first;
+        averageVelocity.second += neighbor->getVelocity().second;
     }
     centerOfNeighbors.first = centerOfNeighbors.first / (float)(neighbors_.size());
     centerOfNeighbors.second = centerOfNeighbors.second / (float)(neighbors_.size());
+
+    averageVelocity.first = averageVelocity.first / (float)(neighbors_.size());
+    averageVelocity.second = averageVelocity.second / (float)(neighbors_.size());
+
     acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
+
+    acceleration_.first += (acceleration_.first - averageVelocity.first) *( MATCHING_FACTOR);
 
     // TODOOOOOOOO    
 
