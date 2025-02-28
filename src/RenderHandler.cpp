@@ -48,6 +48,8 @@ void RenderHandler::renderUniverse(const God *god)
     if (renderQuadTree_) renderQuadTree(god);
     if (renderProximity_) renderProximity(god);
     if (renderNeighboringLinks_) renderNeighboringLinks(god);
+    if (renderFirst_) renderFirst(god);
+    
 
     SDL_RenderPresent(renderer_.get());
     return;
@@ -58,7 +60,7 @@ void RenderHandler::renderCell(const CellularUnit cellularUnit){
     //drawDisk(cellularUnit.getCoords().first, cellularUnit.getCoords().second, CELL_SIZE);
 
     // Triangular Cell
-    const float velocityAngle = cellularUnit.getVelocity().second;
+    const float velocityAngle = cellularUnit.getCellAngle();
     float x = cellularUnit.getX();
     float y = cellularUnit.getY();
 
@@ -139,7 +141,7 @@ void RenderHandler::renderFieldViews(const God *god)
     for (size_t i = 0; i < god->getCellularUnits()->size(); i++)
     {
         CellularUnit cellularUnit = (*god->getCellularUnits())[i];
-        renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getVelocity().second);
+        renderFieldView(cellularUnit.getX(), cellularUnit.getY(), cellularUnit.getCellAngle());
     }
     return;
 }
@@ -182,6 +184,60 @@ void RenderHandler::renderNeighboringLinks(const God *god)
     }
     return;
 }
+
+void RenderHandler::renderFirst(const God *god)
+{
+    if(god->getIndexCellularUnits() ==   0) return;
+    CellularUnit firstCell = (*god->getCellularUnits())[0];
+    float x = firstCell.getX();
+    float y = firstCell.getY();
+
+    // Red Line = Velocity
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_RUBY);
+    SDL_RenderDrawLine(renderer_.get(), x, y,
+         x + ((firstCell.getVelocity().first / (MAX_SPEED)) * DISTANCE_VIEW),
+         y + ((firstCell.getVelocity().second / (MAX_SPEED)) * DISTANCE_VIEW));
+    
+    // Green Line = Acceleration
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_GREEN);
+    SDL_RenderDrawLine(renderer_.get(), x, y,
+         x + ((firstCell.getAcceleration().first / MAX_ACCEL) * DISTANCE_VIEW),
+         y + ((firstCell.getAcceleration().second / MAX_ACCEL) * DISTANCE_VIEW));
+    
+    // Neighbors-related metrics so return if none;
+    if (firstCell.getNeighbors().size() == 0) return;
+
+    // Yellow Circle for center of mass of neighbors 
+    // Grey line for linked neighbors
+    // Cinnamon circle for average neighbors velocity
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_GREY);
+    std::pair<float, float> averageVelocity = {0 ,0 };
+    std::pair<float, float> centerOfNeighbors = {0 ,0 };
+    for (const auto& neighbor : firstCell.getNeighbors()){
+        SDL_RenderDrawLine(renderer_.get(), firstCell.getX(), firstCell.getY(), neighbor->getX(), neighbor->getY());
+        
+        centerOfNeighbors.first += neighbor->getX() - x;
+        centerOfNeighbors.second += neighbor->getY() - y;
+
+        averageVelocity.first += neighbor->getVelocity().first;
+        averageVelocity.second += neighbor->getVelocity().second;
+    }
+    centerOfNeighbors.first = centerOfNeighbors.first / (float)(firstCell.getNeighbors().size());
+    centerOfNeighbors.second = centerOfNeighbors.second / (float)(firstCell.getNeighbors().size());
+
+    averageVelocity.first = averageVelocity.first / (float)(firstCell.getNeighbors().size());
+    averageVelocity.second = averageVelocity.second / (float)(firstCell.getNeighbors().size());
+
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_YELLOW);
+    drawCircle(x + centerOfNeighbors.first, y + centerOfNeighbors.second, CELL_SIZE);
+
+    SDL_SetRenderDrawColor(renderer_.get(), SDL_CINNAMON);
+    drawCircle(x + averageVelocity.first, y + averageVelocity.second, CELL_SIZE);
+
+    return;
+}
+
+
 
 void RenderHandler::drawrect(int x, int y, int x2, int y2)
 {   

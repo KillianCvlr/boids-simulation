@@ -41,13 +41,22 @@ public:
     inline void addNeighbor(const CellularUnit *unit) { neighbors_.push_back(unit); }
     inline void clearNeighbors() { neighbors_.clear(); }
     inline const std::list<const CellularUnit *> getNeighbors() const { return neighbors_; }
+    inline float getCellAngle() const {return cellAngle_;}
+    inline void actualizeAngle() {cellAngle_ = atan2f(velocity_.second, velocity_.first);}
     inline size_t getId(){return id_;}
 
 private:
+    // Coords is a pair of float that keeps the coordinates of the cell
     std::pair<float, float> coords_;
 
-    // Velocity is a pair of float, the first float is the speed, the second is the orientation of the cell (angle)
+    // Velocity is a pair of float representing the x and y values of the velocity vector
     std::pair<float, float> velocity_;
+
+    // CellAngle is the representation of the angle to the horizontal of the Cell
+    // Stocked for perfomance issues
+    float cellAngle_;
+
+    // Acceleration is a pair of float representing the x and y values of the Acceleration vector
     std::pair<float, float> acceleration_;
     std::list<const CellularUnit *> neighbors_ = {};
     size_t id_;

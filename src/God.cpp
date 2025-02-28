@@ -3,6 +3,7 @@
 
 God::God(float nbColumns, float nbLines, size_t nbCellularUnits) :screenX_(nbColumns), screenY_(nbLines), quadTree_(nullptr), indexCellularUnits_(nbCellularUnits)
 {
+    // Initializes the cellularUnits_ vector with newly created cells
     for (size_t i = 0; i < nbCellularUnits; i++)
     {
         cellularUnits_.push_back(CellularUnit(rand() %  (int)screenX_, rand() %  (int)screenY_, i));
@@ -28,9 +29,7 @@ void God::newUniverse(size_t nbCellularUnits)
     cellularUnits_.clear();
     for (size_t i = 0; i < nbCellularUnits; i++)
     {
-        std::cout << "Creating new CellularUnit" << std::endl;
         cellularUnits_.push_back(CellularUnit(rand() % (int)screenX_, rand() %  (int)screenY_, i));
-        std::cout << "New CellularUnit created : " << std::endl;
     }
     indexCellularUnits_ = nbCellularUnits;
     quadTree_.reset(new QuadTree(0, 0, screenX_, screenY_, 0));

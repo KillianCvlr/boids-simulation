@@ -112,6 +112,11 @@ WindowState Window::handleEvents(SDL_Event e, God *god)
                 renderHandler_.switchRenderNeighboringLinks();
                 renderHandler_.renderUniverse(god);
                 break;
+            
+            case SDLK_a:
+                renderHandler_.switchRenderFirst();
+                renderHandler_.renderUniverse(god);
+                break;
                 
             default:
                 break;
