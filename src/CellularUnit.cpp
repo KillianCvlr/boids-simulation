@@ -119,6 +119,10 @@ void CellularUnit::updateAccelFlocking(){
     std::pair<float, float> centerOfNeighbors = {0 ,0 };
     // Alignment
     std::pair<float, float> averageVelocity = {0 ,0 };
+    // Separation
+    std::pair<float, float> averageSeparation = {0 ,0 };
+    int nbCloseNeighbor = 0;
+
 
     for (const auto& neighbor : neighbors_){
         centerOfNeighbors.first += neighbor->getX() - coords_.first;
@@ -126,6 +130,12 @@ void CellularUnit::updateAccelFlocking(){
 
         averageVelocity.first += neighbor->getVelocity().first;
         averageVelocity.second += neighbor->getVelocity().second;
+
+        if(getDistanceToNeighbor(neighbor) < MIN_SEPARATOR_DISTANCE){
+            averageSeparation.first += coords_.first - neighbor->getX();
+            averageSeparation.second += coords_.second - neighbor->getY();
+            nbCloseNeighbor++;
+        }
     }
     centerOfNeighbors.first = centerOfNeighbors.first / (float)(neighbors_.size());
     centerOfNeighbors.second = centerOfNeighbors.second / (float)(neighbors_.size());
@@ -133,9 +143,20 @@ void CellularUnit::updateAccelFlocking(){
     averageVelocity.first = averageVelocity.first / (float)(neighbors_.size());
     averageVelocity.second = averageVelocity.second / (float)(neighbors_.size());
 
-    acceleration_ = acceleration_ + (centerOfNeighbors *( FORCE_FACTOR));
+    if(nbCloseNeighbor > 0){
+        averageSeparation.first /= nbCloseNeighbor;
+        averageSeparation.second /= nbCloseNeighbor;
+    }
+    
 
-    acceleration_.first += (acceleration_.first - averageVelocity.first) *( MATCHING_FACTOR);
+    // Apply all rules to acceleration
+
+    acceleration_ = acceleration_ + (centerOfNeighbors *(COHESION_FACTOR));
+
+    acceleration_.first += (velocity_.first - averageVelocity.first) *( ALIGNMENT_FACTOR);
+    acceleration_.second += (velocity_.second - averageVelocity.second) *( ALIGNMENT_FACTOR);
+
+    acceleration_ = acceleration_ + (averageSeparation * SEPARATION_FACTOR);
 
     // TODOOOOOOOO    
 
