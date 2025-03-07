@@ -1,32 +1,35 @@
 #pragma once
+#include <math.h>
 
 // Display parameters
 
-#define SCREEN_X 2000
-#define SCREEN_Y 1000
+extern int SCREEN_X;
+extern int SCREEN_Y;
 
-#define COLUMN_NUMBER (SCREEN_X / CELL_SIZE)
-#define LINE_NUMBER (SCREEN_Y / CELL_SIZE)
+extern int COLUMN_NUMBER;
+extern int LINE_NUMBER;
 
-#define FPS 200
+extern int FPS;
 
 //Simulation parameters
 
-#define NB_CELLULAR_UNITS ((COLUMN_NUMBER * LINE_NUMBER) / 200)
-//#define NB_CELLULAR_UNITS 1
-#define CELL_SIZE 4
+extern int NB_CELLULAR_UNITS;
+//extern int NB_CELLULAR_UNITS;
+extern int CELL_SIZE;
 
-#define ANGLE_VIEW  M_PIf + M_PI_4f
-#define DISTANCE_VIEW 20*CELL_SIZE
+extern float ANGLE_VIEW;
+extern int DISTANCE_VIEW;
 
-#define SIZE_MAX_QTREE 2
-#define MAX_LEVEL_QTREE 20
+extern int SIZE_MAX_QTREE;
+extern int MAX_LEVEL_QTREE;
 
-#define COHESION_FACTOR 0.02
-#define ALIGNMENT_FACTOR 0.05
-#define SEPARATION_FACTOR 0.05
-#define MAX_SPEED 1.0
-#define MAX_ACCEL 1.0
-#define MIN_SEPARATOR_DISTANCE 4*CELL_SIZE
+extern float COHESION_FACTOR;
+extern float ALIGNMENT_FACTOR;
+extern float SEPARATION_FACTOR;
+extern float MAX_SPEED;
+extern float MAX_ACCEL;
+extern int MIN_SEPARATOR_DISTANCE;
 
-#define DT 0.01
+extern float DT;
+
+void setDefaultValues();
