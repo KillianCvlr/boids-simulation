@@ -40,7 +40,7 @@ void setDefaultValues(){
     SCREEN_X = 2000;
     SCREEN_Y = 1000;
 
-    CELL_SIZE = 1;
+    CELL_SIZE = 4;
     COLUMN_NUMBER = (SCREEN_X / CELL_SIZE);
     LINE_NUMBER = (SCREEN_Y / CELL_SIZE);
 
