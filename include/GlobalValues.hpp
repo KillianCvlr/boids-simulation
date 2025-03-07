@@ -13,7 +13,7 @@ extern int FPS;
 
 //Simulation parameters
 
-extern int NB_CELLULAR_UNITS;
+extern size_t NB_CELLULAR_UNITS;
 //extern int NB_CELLULAR_UNITS;
 extern int CELL_SIZE;
 
@@ -28,7 +28,7 @@ extern float ALIGNMENT_FACTOR;
 extern float SEPARATION_FACTOR;
 extern float MAX_SPEED;
 extern float MAX_ACCEL;
-extern int MIN_SEPARATOR_DISTANCE;
+extern float MIN_SEPARATOR_DISTANCE;
 
 extern float DT;
 

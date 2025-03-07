@@ -1,4 +1,4 @@
-#include "DefaultValues.hpp"
+#include "GlobalValues.hpp"
 
 
 
@@ -14,7 +14,7 @@ int FPS;
 
 //Simulation parameters
 
-int NB_CELLULAR_UNITS;
+size_t NB_CELLULAR_UNITS;
 //int NB_CELLULAR_UNITS;
 int CELL_SIZE;
 
@@ -29,7 +29,7 @@ float ALIGNMENT_FACTOR;
 float SEPARATION_FACTOR;
 float MAX_SPEED;
 float MAX_ACCEL;
-int MIN_SEPARATOR_DISTANCE;
+float MIN_SEPARATOR_DISTANCE;
 
 float DT;
 
@@ -40,6 +40,7 @@ void setDefaultValues(){
     SCREEN_X = 2000;
     SCREEN_Y = 1000;
 
+    CELL_SIZE = 1;
     COLUMN_NUMBER = (SCREEN_X / CELL_SIZE);
     LINE_NUMBER = (SCREEN_Y / CELL_SIZE);
 
@@ -49,7 +50,6 @@ void setDefaultValues(){
 
     NB_CELLULAR_UNITS = ((COLUMN_NUMBER * LINE_NUMBER) / 200);
     // NB_CELLULAR_UNITS = 1
-    CELL_SIZE = 4;
 
     ANGLE_VIEW =  M_PIf + M_PI_4f;
     DISTANCE_VIEW = 20*CELL_SIZE;

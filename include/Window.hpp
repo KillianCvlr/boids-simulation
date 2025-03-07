@@ -2,7 +2,7 @@
 
 #include "RenderHandler.hpp"
 #include "God.hpp"
-#include "DefaultValues.hpp"
+#include "GlobalValues.hpp"
 #include <iostream>
 #include <memory>
 

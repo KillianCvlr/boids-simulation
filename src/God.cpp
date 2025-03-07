@@ -1,12 +1,13 @@
 #include "../include/God.hpp"
 
 
-God::God(float nbColumns, float nbLines, size_t nbCellularUnits) :screenX_(nbColumns), screenY_(nbLines), quadTree_(nullptr), indexCellularUnits_(nbCellularUnits)
+God::God(int nbColumns, int nbLines, size_t nbCellularUnits) :screenX_(nbColumns), screenY_(nbLines), quadTree_(nullptr), indexCellularUnits_(nbCellularUnits)
 {
     // Initializes the cellularUnits_ vector with newly created cells
     for (size_t i = 0; i < nbCellularUnits; i++)
     {
-        cellularUnits_.push_back(CellularUnit(rand() %  (int)screenX_, rand() %  (int)screenY_, i));
+        cellularUnits_.push_back(CellularUnit(rand() %  screenX_, rand() %  screenY_, i));
+        std::cout << "FInito ";
     }
 }
 

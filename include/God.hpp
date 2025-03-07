@@ -13,7 +13,7 @@ class God
 {
 
 public:
-    God(float nbColulmns, float nbLines, size_t nbCellularUnits);
+    God(int nbColulmns, int nbLines, size_t nbCellularUnits);
     ~God();
 
     void updateUniverse();
@@ -26,15 +26,15 @@ public:
     void updateNeighbours();
 
     inline const std::vector<CellularUnit>* getCellularUnits() const { return &cellularUnits_; }
-    inline float getNbColumns() const { return screenX_;; }
-    inline float getNbLines() const { return screenY_;; }
+    inline int getNbColumns() const { return screenX_;; }
+    inline int getNbLines() const { return screenY_;; }
     inline QuadTree* getQuadTree() const { return quadTree_.get(); }
     inline size_t getIndexCellularUnits() const {return indexCellularUnits_;}
 
 private:
     std::vector<CellularUnit> cellularUnits_;
-    float screenX_;
-    float screenY_;
+    int screenX_;
+    int screenY_;
 
     std::unique_ptr<QuadTree> quadTree_;
     size_t indexCellularUnits_;

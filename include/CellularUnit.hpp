@@ -6,7 +6,7 @@
 #include <cmath>
 #include <list>
 
-#include "DefaultValues.hpp"
+#include "GlobalValues.hpp"
 
 enum class CellBehavior
 {

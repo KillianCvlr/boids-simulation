@@ -1,11 +1,11 @@
 #include "Window.hpp"  
-#include "DefaultValues.hpp"
+#include "GlobalValues.hpp"
 #include <iostream>
 
 int main(int argc, char const *argv[])
 {
     // Display parameters
-    
+    setDefaultValues();
 
     std::cout << "Main started" << std::endl;
     Window window;
